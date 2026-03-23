@@ -12902,16 +12902,28 @@ export declare namespace CloudflareWorkersModule {
   export type WorkflowStepContext = {
     attempt: number;
   };
+  export interface RollbackContext<T> {
+    error: Error;
+    output: T | undefined;
+    stepName: string;
+  }
+  export interface StepPromise<T> extends Promise<T> {
+    rollback(fn: (ctx: RollbackContext<T>) => Promise<void>): StepPromise<T>;
+    rollback(
+      config: WorkflowStepConfig,
+      fn: (ctx: RollbackContext<T>) => Promise<void>,
+    ): StepPromise<T>;
+  }
   export abstract class WorkflowStep {
     do<T extends Rpc.Serializable<T>>(
       name: string,
       callback: (ctx: WorkflowStepContext) => Promise<T>,
-    ): Promise<T>;
+    ): StepPromise<T>;
     do<T extends Rpc.Serializable<T>>(
       name: string,
       config: WorkflowStepConfig,
       callback: (ctx: WorkflowStepContext) => Promise<T>,
-    ): Promise<T>;
+    ): StepPromise<T>;
     sleep: (name: string, duration: WorkflowSleepDuration) => Promise<void>;
     sleepUntil: (name: string, timestamp: Date | number) => Promise<void>;
     waitForEvent<T extends Rpc.Serializable<T>>(
@@ -12920,7 +12932,7 @@ export declare namespace CloudflareWorkersModule {
         type: string;
         timeout?: WorkflowTimeoutDuration | number;
       },
-    ): Promise<WorkflowStepEvent<T>>;
+    ): StepPromise<WorkflowStepEvent<T>>;
   }
   export type WorkflowInstanceStatus =
     | "queued"
