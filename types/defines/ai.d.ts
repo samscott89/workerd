@@ -134,7 +134,12 @@ export declare abstract class BaseAiTextEmbeddings {
   postProcessedOutputs: AiTextEmbeddingsOutput;
 }
 export type RoleScopedChatInput = {
-  role: "user" | "assistant" | "system" | "tool" | (string & NonNullable<unknown>);
+  role:
+    | 'user'
+    | 'assistant'
+    | 'system'
+    | 'tool'
+    | (string & NonNullable<unknown>);
   content: string;
   name?: string;
 };
@@ -142,7 +147,7 @@ export type AiTextGenerationToolLegacyInput = {
   name: string;
   description: string;
   parameters?: {
-    type: "object" | (string & NonNullable<unknown>);
+    type: 'object' | (string & NonNullable<unknown>);
     properties: {
       [key: string]: {
         type: string;
@@ -153,12 +158,12 @@ export type AiTextGenerationToolLegacyInput = {
   };
 };
 export type AiTextGenerationToolInput = {
-  type: "function" | (string & NonNullable<unknown>);
+  type: 'function' | (string & NonNullable<unknown>);
   function: {
     name: string;
     description: string;
     parameters?: {
-      type: "object" | (string & NonNullable<unknown>);
+      type: 'object' | (string & NonNullable<unknown>);
       properties: {
         [key: string]: {
           type: string;
@@ -191,7 +196,10 @@ export type AiTextGenerationInput = {
   presence_penalty?: number;
   messages?: RoleScopedChatInput[];
   response_format?: AiTextGenerationResponseFormat;
-  tools?: AiTextGenerationToolInput[] | AiTextGenerationToolLegacyInput[] | (object & NonNullable<unknown>);
+  tools?:
+    | AiTextGenerationToolInput[]
+    | AiTextGenerationToolLegacyInput[]
+    | (object & NonNullable<unknown>);
   functions?: AiTextGenerationFunctionsInput[];
 };
 export type AiTextGenerationToolLegacyOutput = {
@@ -200,7 +208,7 @@ export type AiTextGenerationToolLegacyOutput = {
 };
 export type AiTextGenerationToolOutput = {
   id: string;
-  type: "function";
+  type: 'function';
   function: {
     name: string;
     arguments: string;
@@ -213,7 +221,8 @@ export type UsageTags = {
 };
 export type AiTextGenerationOutput = {
   response?: string;
-  tool_calls?: AiTextGenerationToolLegacyOutput[] & AiTextGenerationToolOutput[];
+  tool_calls?: AiTextGenerationToolLegacyOutput[] &
+    AiTextGenerationToolOutput[];
   usage?: UsageTags;
 };
 export declare abstract class BaseAiTextGeneration {
@@ -267,26 +276,26 @@ export declare abstract class BaseAiTranslation {
  * Workers AI support for OpenAI's Chat Completions API
  */
 export type ChatCompletionContentPartText = {
-  type: "text";
+  type: 'text';
   text: string;
 };
 export type ChatCompletionContentPartImage = {
-  type: "image_url";
+  type: 'image_url';
   image_url: {
     url: string;
-    detail?: "auto" | "low" | "high";
+    detail?: 'auto' | 'low' | 'high';
   };
 };
 export type ChatCompletionContentPartInputAudio = {
-  type: "input_audio";
+  type: 'input_audio';
   input_audio: {
     /** Base64 encoded audio data. */
     data: string;
-    format: "wav" | "mp3";
+    format: 'wav' | 'mp3';
   };
 };
 export type ChatCompletionContentPartFile = {
-  type: "file";
+  type: 'file';
   file: {
     /** Base64 encoded file data. */
     file_data?: string;
@@ -296,7 +305,7 @@ export type ChatCompletionContentPartFile = {
   };
 };
 export type ChatCompletionContentPartRefusal = {
-  type: "refusal";
+  type: 'refusal';
   refusal: string;
 };
 export type ChatCompletionContentPart =
@@ -311,32 +320,36 @@ export type FunctionDefinition = {
   strict?: boolean | null;
 };
 export type ChatCompletionFunctionTool = {
-  type: "function";
+  type: 'function';
   function: FunctionDefinition;
 };
 export type ChatCompletionCustomToolGrammarFormat = {
-  type: "grammar";
+  type: 'grammar';
   grammar: {
     definition: string;
-    syntax: "lark" | "regex";
+    syntax: 'lark' | 'regex';
   };
 };
 export type ChatCompletionCustomToolTextFormat = {
-  type: "text";
+  type: 'text';
 };
-export type ChatCompletionCustomToolFormat = ChatCompletionCustomToolTextFormat | ChatCompletionCustomToolGrammarFormat;
+export type ChatCompletionCustomToolFormat =
+  | ChatCompletionCustomToolTextFormat
+  | ChatCompletionCustomToolGrammarFormat;
 export type ChatCompletionCustomTool = {
-  type: "custom";
+  type: 'custom';
   custom: {
     name: string;
     description?: string;
     format?: ChatCompletionCustomToolFormat;
   };
 };
-export type ChatCompletionTool = ChatCompletionFunctionTool | ChatCompletionCustomTool;
+export type ChatCompletionTool =
+  | ChatCompletionFunctionTool
+  | ChatCompletionCustomTool;
 export type ChatCompletionMessageFunctionToolCall = {
   id: string;
-  type: "function";
+  type: 'function';
   function: {
     name: string;
     /** JSON-encoded arguments string. */
@@ -345,55 +358,57 @@ export type ChatCompletionMessageFunctionToolCall = {
 };
 export type ChatCompletionMessageCustomToolCall = {
   id: string;
-  type: "custom";
+  type: 'custom';
   custom: {
     name: string;
     input: string;
   };
 };
-export type ChatCompletionMessageToolCall = ChatCompletionMessageFunctionToolCall | ChatCompletionMessageCustomToolCall;
+export type ChatCompletionMessageToolCall =
+  | ChatCompletionMessageFunctionToolCall
+  | ChatCompletionMessageCustomToolCall;
 export type ChatCompletionToolChoiceFunction = {
-  type: "function";
+  type: 'function';
   function: {
     name: string;
   };
 };
 export type ChatCompletionToolChoiceCustom = {
-  type: "custom";
+  type: 'custom';
   custom: {
     name: string;
   };
 };
 export type ChatCompletionToolChoiceAllowedTools = {
-  type: "allowed_tools";
+  type: 'allowed_tools';
   allowed_tools: {
-    mode: "auto" | "required";
+    mode: 'auto' | 'required';
     tools: Array<Record<string, unknown>>;
   };
 };
 export type ChatCompletionToolChoiceOption =
-  | "none"
-  | "auto"
-  | "required"
+  | 'none'
+  | 'auto'
+  | 'required'
   | ChatCompletionToolChoiceFunction
   | ChatCompletionToolChoiceCustom
   | ChatCompletionToolChoiceAllowedTools;
 export type DeveloperMessage = {
-  role: "developer";
+  role: 'developer';
   content:
     | string
     | Array<{
-        type: "text";
+        type: 'text';
         text: string;
       }>;
   name?: string;
 };
 export type SystemMessage = {
-  role: "system";
+  role: 'system';
   content:
     | string
     | Array<{
-        type: "text";
+        type: 'text';
         text: string;
       }>;
   name?: string;
@@ -406,15 +421,15 @@ export type SystemMessage = {
  * different array elements, so the schema uses a single merged object.
  */
 export type UserMessageContentPart = {
-  type: "text" | "image_url" | "input_audio" | "file";
+  type: 'text' | 'image_url' | 'input_audio' | 'file';
   text?: string;
   image_url?: {
     url?: string;
-    detail?: "auto" | "low" | "high";
+    detail?: 'auto' | 'low' | 'high';
   };
   input_audio?: {
     data?: string;
-    format?: "wav" | "mp3";
+    format?: 'wav' | 'mp3';
   };
   file?: {
     file_data?: string;
@@ -423,17 +438,17 @@ export type UserMessageContentPart = {
   };
 };
 export type UserMessage = {
-  role: "user";
+  role: 'user';
   content: string | Array<UserMessageContentPart>;
   name?: string;
 };
 export type AssistantMessageContentPart = {
-  type: "text" | "refusal";
+  type: 'text' | 'refusal';
   text?: string;
   refusal?: string;
 };
 export type AssistantMessage = {
-  role: "assistant";
+  role: 'assistant';
   content?: string | null | Array<AssistantMessageContentPart>;
   refusal?: string | null;
   name?: string;
@@ -447,17 +462,17 @@ export type AssistantMessage = {
   };
 };
 export type ToolMessage = {
-  role: "tool";
+  role: 'tool';
   content:
     | string
     | Array<{
-        type: "text";
+        type: 'text';
         text: string;
       }>;
   tool_call_id: string;
 };
 export type FunctionMessage = {
-  role: "function";
+  role: 'function';
   content: string;
   name: string;
 };
@@ -469,13 +484,13 @@ export type ChatCompletionMessageParam =
   | ToolMessage
   | FunctionMessage;
 export type ChatCompletionsResponseFormatText = {
-  type: "text";
+  type: 'text';
 };
 export type ChatCompletionsResponseFormatJSONObject = {
-  type: "json_object";
+  type: 'json_object';
 };
 export type ResponseFormatJSONSchema = {
-  type: "json_schema";
+  type: 'json_schema';
   json_schema: {
     name: string;
     description?: string;
@@ -492,11 +507,11 @@ export type ChatCompletionsStreamOptions = {
   include_obfuscation?: boolean;
 };
 export type PredictionContent = {
-  type: "content";
+  type: 'content';
   content:
     | string
     | Array<{
-        type: "text";
+        type: 'text';
         text: string;
       }>;
 };
@@ -506,10 +521,10 @@ export type AudioParams = {
     | {
         id: string;
       };
-  format: "wav" | "aac" | "mp3" | "flac" | "opus" | "pcm16";
+  format: 'wav' | 'aac' | 'mp3' | 'flac' | 'opus' | 'pcm16';
 };
 export type WebSearchUserLocation = {
-  type: "approximate";
+  type: 'approximate';
   approximate: {
     city?: string;
     country?: string;
@@ -518,7 +533,7 @@ export type WebSearchUserLocation = {
   };
 };
 export type WebSearchOptions = {
-  search_context_size?: "low" | "medium" | "high";
+  search_context_size?: 'low' | 'medium' | 'high';
   user_location?: WebSearchUserLocation;
 };
 export type ChatTemplateKwargs = {
@@ -538,16 +553,16 @@ export type ChatCompletionsCommonOptions = {
   max_tokens?: number | null;
   max_completion_tokens?: number | null;
   metadata?: Record<string, unknown> | null;
-  modalities?: Array<"text" | "audio"> | null;
+  modalities?: Array<'text' | 'audio'> | null;
   n?: number | null;
   parallel_tool_calls?: boolean;
   prediction?: PredictionContent;
   presence_penalty?: number | null;
-  reasoning_effort?: "low" | "medium" | "high" | null;
+  reasoning_effort?: 'low' | 'medium' | 'high' | null;
   chat_template_kwargs?: ChatTemplateKwargs;
   response_format?: ResponseFormat;
   seed?: number | null;
-  service_tier?: "auto" | "default" | "flex" | "scale" | "priority" | null;
+  service_tier?: 'auto' | 'default' | 'flex' | 'scale' | 'priority' | null;
   stop?: string | Array<string> | null;
   store?: boolean | null;
   stream?: boolean | null;
@@ -559,8 +574,8 @@ export type ChatCompletionsCommonOptions = {
   user?: string;
   web_search_options?: WebSearchOptions;
   function_call?:
-    | "none"
-    | "auto"
+    | 'none'
+    | 'auto'
     | {
         name: string;
       };
@@ -602,7 +617,7 @@ export type ChatCompletionAudio = {
   transcript: string;
 };
 export type ChatCompletionUrlCitation = {
-  type: "url_citation";
+  type: 'url_citation';
   url_citation: {
     url: string;
     title: string;
@@ -611,7 +626,7 @@ export type ChatCompletionUrlCitation = {
   };
 };
 export type ChatCompletionResponseMessage = {
-  role: "assistant";
+  role: 'assistant';
   content: string | null;
   refusal: string | null;
   annotations?: Array<ChatCompletionUrlCitation>;
@@ -629,7 +644,12 @@ export type ChatCompletionLogprobs = {
 export type ChatCompletionChoice = {
   index: number;
   message: ChatCompletionResponseMessage;
-  finish_reason: "stop" | "length" | "tool_calls" | "content_filter" | "function_call";
+  finish_reason:
+    | 'stop'
+    | 'length'
+    | 'tool_calls'
+    | 'content_filter'
+    | 'function_call';
   logprobs: ChatCompletionLogprobs | null;
 };
 export type ChatCompletionsPromptInput = {
@@ -646,7 +666,7 @@ export type ChatCompletionsOutput = {
   choices: Array<ChatCompletionChoice>;
   usage?: CompletionUsage;
   system_fingerprint?: string | null;
-  service_tier?: "auto" | "default" | "flex" | "scale" | "priority" | null;
+  service_tier?: 'auto' | 'default' | 'flex' | 'scale' | 'priority' | null;
 };
 /**
  * Workers AI support for OpenAI's Responses API
@@ -670,7 +690,7 @@ export type ResponsesInput = {
   prompt_cache_key?: string;
   reasoning?: Reasoning | null;
   safety_identifier?: string;
-  service_tier?: "auto" | "default" | "flex" | "scale" | "priority" | null;
+  service_tier?: 'auto' | 'default' | 'flex' | 'scale' | 'priority' | null;
   stream?: boolean | null;
   stream_options?: StreamOptions | null;
   temperature?: number | null;
@@ -678,7 +698,7 @@ export type ResponsesInput = {
   tool_choice?: ToolChoiceOptions | ToolChoiceFunction;
   tools?: Array<Tool>;
   top_p?: number | null;
-  truncation?: "auto" | "disabled" | null;
+  truncation?: 'auto' | 'disabled' | null;
 };
 export type ResponsesOutput = {
   id?: string;
@@ -687,7 +707,7 @@ export type ResponsesOutput = {
   error?: ResponseError | null;
   incomplete_details?: ResponseIncompleteDetails | null;
   instructions?: string | Array<ResponseInputItem> | null;
-  object?: "response";
+  object?: 'response';
   output?: Array<ResponseOutputItem>;
   parallel_tool_calls?: boolean;
   temperature?: number | null;
@@ -699,16 +719,16 @@ export type ResponsesOutput = {
   prompt?: ResponsePrompt | null;
   reasoning?: Reasoning | null;
   safety_identifier?: string;
-  service_tier?: "auto" | "default" | "flex" | "scale" | "priority" | null;
+  service_tier?: 'auto' | 'default' | 'flex' | 'scale' | 'priority' | null;
   status?: ResponseStatus;
   text?: ResponseTextConfig;
-  truncation?: "auto" | "disabled" | null;
+  truncation?: 'auto' | 'disabled' | null;
   usage?: ResponseUsage;
 };
 export type EasyInputMessage = {
   content: string | ResponseInputMessageContentList;
-  role: "user" | "assistant" | "system" | "developer";
-  type?: "message";
+  role: 'user' | 'assistant' | 'system' | 'developer';
+  type?: 'message';
 };
 export type ResponsesFunctionTool = {
   name: string;
@@ -716,11 +736,11 @@ export type ResponsesFunctionTool = {
     [key: string]: unknown;
   } | null;
   strict: boolean | null;
-  type: "function";
+  type: 'function';
   description?: string | null;
 };
 export type ResponseIncompleteDetails = {
-  reason?: "max_output_tokens" | "content_filter";
+  reason?: 'max_output_tokens' | 'content_filter';
 };
 export type ResponsePrompt = {
   id: string;
@@ -731,8 +751,8 @@ export type ResponsePrompt = {
 };
 export type Reasoning = {
   effort?: ReasoningEffort | null;
-  generate_summary?: "auto" | "concise" | "detailed" | null;
-  summary?: "auto" | "concise" | "detailed" | null;
+  generate_summary?: 'auto' | 'concise' | 'detailed' | null;
+  summary?: 'auto' | 'concise' | 'detailed' | null;
 };
 export type ResponseContent =
   | ResponseInputText
@@ -742,7 +762,7 @@ export type ResponseContent =
   | ResponseContentReasoningText;
 export type ResponseContentReasoningText = {
   text: string;
-  type: "reasoning_text";
+  type: 'reasoning_text';
 };
 export type ResponseConversationParam = {
   id: string;
@@ -750,34 +770,34 @@ export type ResponseConversationParam = {
 export type ResponseCreatedEvent = {
   response: Response;
   sequence_number: number;
-  type: "response.created";
+  type: 'response.created';
 };
 export type ResponseCustomToolCallOutput = {
   call_id: string;
   output: string | Array<ResponseInputText | ResponseInputImage>;
-  type: "custom_tool_call_output";
+  type: 'custom_tool_call_output';
   id?: string;
 };
 export type ResponseError = {
   code:
-    | "server_error"
-    | "rate_limit_exceeded"
-    | "invalid_prompt"
-    | "vector_store_timeout"
-    | "invalid_image"
-    | "invalid_image_format"
-    | "invalid_base64_image"
-    | "invalid_image_url"
-    | "image_too_large"
-    | "image_too_small"
-    | "image_parse_error"
-    | "image_content_policy_violation"
-    | "invalid_image_mode"
-    | "image_file_too_large"
-    | "unsupported_image_media_type"
-    | "empty_image_file"
-    | "failed_to_download_image"
-    | "image_file_not_found";
+    | 'server_error'
+    | 'rate_limit_exceeded'
+    | 'invalid_prompt'
+    | 'vector_store_timeout'
+    | 'invalid_image'
+    | 'invalid_image_format'
+    | 'invalid_base64_image'
+    | 'invalid_image_url'
+    | 'image_too_large'
+    | 'image_too_small'
+    | 'image_parse_error'
+    | 'image_content_policy_violation'
+    | 'invalid_image_mode'
+    | 'image_file_too_large'
+    | 'unsupported_image_media_type'
+    | 'empty_image_file'
+    | 'failed_to_download_image'
+    | 'image_file_not_found';
   message: string;
 };
 export type ResponseErrorEvent = {
@@ -785,18 +805,18 @@ export type ResponseErrorEvent = {
   message: string;
   param: string | null;
   sequence_number: number;
-  type: "error";
+  type: 'error';
 };
 export type ResponseFailedEvent = {
   response: Response;
   sequence_number: number;
-  type: "response.failed";
+  type: 'response.failed';
 };
 export type ResponseFormatText = {
-  type: "text";
+  type: 'text';
 };
 export type ResponseFormatJSONObject = {
-  type: "json_object";
+  type: 'json_object';
 };
 export type ResponseFormatTextConfig =
   | ResponseFormatText
@@ -807,7 +827,7 @@ export type ResponseFormatTextJSONSchemaConfig = {
   schema: {
     [key: string]: unknown;
   };
-  type: "json_schema";
+  type: 'json_schema';
   description?: string;
   strict?: boolean | null;
 };
@@ -816,7 +836,7 @@ export type ResponseFunctionCallArgumentsDeltaEvent = {
   item_id: string;
   output_index: number;
   sequence_number: number;
-  type: "response.function_call_arguments.delta";
+  type: 'response.function_call_arguments.delta';
 };
 export type ResponseFunctionCallArgumentsDoneEvent = {
   arguments: string;
@@ -824,17 +844,20 @@ export type ResponseFunctionCallArgumentsDoneEvent = {
   name: string;
   output_index: number;
   sequence_number: number;
-  type: "response.function_call_arguments.done";
+  type: 'response.function_call_arguments.done';
 };
-export type ResponseFunctionCallOutputItem = ResponseInputTextContent | ResponseInputImageContent;
-export type ResponseFunctionCallOutputItemList = Array<ResponseFunctionCallOutputItem>;
+export type ResponseFunctionCallOutputItem =
+  | ResponseInputTextContent
+  | ResponseInputImageContent;
+export type ResponseFunctionCallOutputItemList =
+  Array<ResponseFunctionCallOutputItem>;
 export type ResponseFunctionToolCall = {
   arguments: string;
   call_id: string;
   name: string;
-  type: "function_call";
+  type: 'function_call';
   id?: string;
-  status?: "in_progress" | "completed" | "incomplete";
+  status?: 'in_progress' | 'completed' | 'incomplete';
 };
 export interface ResponseFunctionToolCallItem extends ResponseFunctionToolCall {
   id: string;
@@ -843,28 +866,30 @@ export type ResponseFunctionToolCallOutputItem = {
   id: string;
   call_id: string;
   output: string | Array<ResponseInputText | ResponseInputImage>;
-  type: "function_call_output";
-  status?: "in_progress" | "completed" | "incomplete";
+  type: 'function_call_output';
+  status?: 'in_progress' | 'completed' | 'incomplete';
 };
-export type ResponseIncludable = "message.input_image.image_url" | "message.output_text.logprobs";
+export type ResponseIncludable =
+  | 'message.input_image.image_url'
+  | 'message.output_text.logprobs';
 export type ResponseIncompleteEvent = {
   response: Response;
   sequence_number: number;
-  type: "response.incomplete";
+  type: 'response.incomplete';
 };
 export type ResponseInput = Array<ResponseInputItem>;
 export type ResponseInputContent = ResponseInputText | ResponseInputImage;
 export type ResponseInputImage = {
-  detail: "low" | "high" | "auto";
-  type: "input_image";
+  detail: 'low' | 'high' | 'auto';
+  type: 'input_image';
   /**
    * Base64 encoded image
    */
   image_url?: string | null;
 };
 export type ResponseInputImageContent = {
-  type: "input_image";
-  detail?: "low" | "high" | "auto" | null;
+  type: 'input_image';
+  detail?: 'low' | 'high' | 'auto' | null;
   /**
    * Base64 encoded image
    */
@@ -880,81 +905,84 @@ export type ResponseInputItem =
 export type ResponseInputItemFunctionCallOutput = {
   call_id: string;
   output: string | ResponseFunctionCallOutputItemList;
-  type: "function_call_output";
+  type: 'function_call_output';
   id?: string | null;
-  status?: "in_progress" | "completed" | "incomplete" | null;
+  status?: 'in_progress' | 'completed' | 'incomplete' | null;
 };
 export type ResponseInputItemMessage = {
   content: ResponseInputMessageContentList;
-  role: "user" | "system" | "developer";
-  status?: "in_progress" | "completed" | "incomplete";
-  type?: "message";
+  role: 'user' | 'system' | 'developer';
+  status?: 'in_progress' | 'completed' | 'incomplete';
+  type?: 'message';
 };
 export type ResponseInputMessageContentList = Array<ResponseInputContent>;
 export type ResponseInputMessageItem = {
   id: string;
   content: ResponseInputMessageContentList;
-  role: "user" | "system" | "developer";
-  status?: "in_progress" | "completed" | "incomplete";
-  type?: "message";
+  role: 'user' | 'system' | 'developer';
+  status?: 'in_progress' | 'completed' | 'incomplete';
+  type?: 'message';
 };
 export type ResponseInputText = {
   text: string;
-  type: "input_text";
+  type: 'input_text';
 };
 export type ResponseInputTextContent = {
   text: string;
-  type: "input_text";
+  type: 'input_text';
 };
 export type ResponseItem =
   | ResponseInputMessageItem
   | ResponseOutputMessage
   | ResponseFunctionToolCallItem
   | ResponseFunctionToolCallOutputItem;
-export type ResponseOutputItem = ResponseOutputMessage | ResponseFunctionToolCall | ResponseReasoningItem;
+export type ResponseOutputItem =
+  | ResponseOutputMessage
+  | ResponseFunctionToolCall
+  | ResponseReasoningItem;
 export type ResponseOutputItemAddedEvent = {
   item: ResponseOutputItem;
   output_index: number;
   sequence_number: number;
-  type: "response.output_item.added";
+  type: 'response.output_item.added';
 };
 export type ResponseOutputItemDoneEvent = {
   item: ResponseOutputItem;
   output_index: number;
   sequence_number: number;
-  type: "response.output_item.done";
+  type: 'response.output_item.done';
 };
 export type ResponseOutputMessage = {
   id: string;
   content: Array<ResponseOutputText | ResponseOutputRefusal>;
-  role: "assistant";
-  status: "in_progress" | "completed" | "incomplete";
-  type: "message";
+  role: 'assistant';
+  status: 'in_progress' | 'completed' | 'incomplete';
+  type: 'message';
 };
 export type ResponseOutputRefusal = {
   refusal: string;
-  type: "refusal";
+  type: 'refusal';
 };
 export type ResponseOutputText = {
   text: string;
-  type: "output_text";
+  type: 'output_text';
   logprobs?: Array<Logprob>;
 };
 export type ResponseReasoningItem = {
   id: string;
   summary: Array<ResponseReasoningSummaryItem>;
-  type: "reasoning";
+  type: 'reasoning';
   content?: Array<ResponseReasoningContentItem>;
   encrypted_content?: string | null;
-  status?: "in_progress" | "completed" | "incomplete";
+  status?: 'in_progress' | 'completed' | 'incomplete';
 };
 export type ResponseReasoningSummaryItem = {
   text: string;
-  type: "summary_text";
+  type: 'summary_text';
 };
 export type ResponseReasoningContentItem = {
   text: string;
-  type: "reasoning_text";
+  type: 'reasoning_text';
 };
 export type ResponseReasoningTextDeltaEvent = {
   content_index: number;
@@ -962,7 +990,7 @@ export type ResponseReasoningTextDeltaEvent = {
   item_id: string;
   output_index: number;
   sequence_number: number;
-  type: "response.reasoning_text.delta";
+  type: 'response.reasoning_text.delta';
 };
 export type ResponseReasoningTextDoneEvent = {
   content_index: number;
@@ -970,7 +998,7 @@ export type ResponseReasoningTextDoneEvent = {
   output_index: number;
   sequence_number: number;
   text: string;
-  type: "response.reasoning_text.done";
+  type: 'response.reasoning_text.done';
 };
 export type ResponseRefusalDeltaEvent = {
   content_index: number;
@@ -978,7 +1006,7 @@ export type ResponseRefusalDeltaEvent = {
   item_id: string;
   output_index: number;
   sequence_number: number;
-  type: "response.refusal.delta";
+  type: 'response.refusal.delta';
 };
 export type ResponseRefusalDoneEvent = {
   content_index: number;
@@ -986,9 +1014,15 @@ export type ResponseRefusalDoneEvent = {
   output_index: number;
   refusal: string;
   sequence_number: number;
-  type: "response.refusal.done";
+  type: 'response.refusal.done';
 };
-export type ResponseStatus = "completed" | "failed" | "in_progress" | "cancelled" | "queued" | "incomplete";
+export type ResponseStatus =
+  | 'completed'
+  | 'failed'
+  | 'in_progress'
+  | 'cancelled'
+  | 'queued'
+  | 'incomplete';
 export type ResponseStreamEvent =
   | ResponseCompletedEvent
   | ResponseCreatedEvent
@@ -1008,11 +1042,11 @@ export type ResponseStreamEvent =
 export type ResponseCompletedEvent = {
   response: Response;
   sequence_number: number;
-  type: "response.completed";
+  type: 'response.completed';
 };
 export type ResponseTextConfig = {
   format?: ResponseFormatTextConfig;
-  verbosity?: "low" | "medium" | "high" | null;
+  verbosity?: 'low' | 'medium' | 'high' | null;
 };
 export type ResponseTextDeltaEvent = {
   content_index: number;
@@ -1021,7 +1055,7 @@ export type ResponseTextDeltaEvent = {
   logprobs: Array<Logprob>;
   output_index: number;
   sequence_number: number;
-  type: "response.output_text.delta";
+  type: 'response.output_text.delta';
 };
 export type ResponseTextDoneEvent = {
   content_index: number;
@@ -1030,7 +1064,7 @@ export type ResponseTextDoneEvent = {
   output_index: number;
   sequence_number: number;
   text: string;
-  type: "response.output_text.done";
+  type: 'response.output_text.done';
 };
 export type Logprob = {
   token: string;
@@ -1049,10 +1083,10 @@ export type ResponseUsage = {
 export type Tool = ResponsesFunctionTool;
 export type ToolChoiceFunction = {
   name: string;
-  type: "function";
+  type: 'function';
 };
-export type ToolChoiceOptions = "none";
-export type ReasoningEffort = "minimal" | "low" | "medium" | "high" | null;
+export type ToolChoiceOptions = 'none';
+export type ReasoningEffort = 'minimal' | 'low' | 'medium' | 'high' | null;
 export type StreamOptions = {
   include_obfuscation?: boolean;
 };
@@ -1062,45 +1096,24 @@ export type Without<T, U> = {
 };
 /** Either T or U, but not both (mutually exclusive) */
 export type XOR<T, U> = (T & Without<U, T>) | (U & Without<T, U>);
-export type Ai_Cf_Baai_Bge_Base_En_V1_5_Input =
-  | {
-      text: string | string[];
-      /**
-       * The pooling method used in the embedding process. `cls` pooling will generate more accurate embeddings on larger inputs - however, embeddings created with cls pooling are not compatible with embeddings generated with mean pooling. The default pooling method is `mean` in order for this to not be a breaking change, but we highly suggest using the new `cls` pooling for better accuracy.
-       */
-      pooling?: "mean" | "cls";
-    }
-  | {
-      /**
-       * Batch of the embeddings requests to run using async-queue
-       */
-      requests: {
-        text: string | string[];
-        /**
-         * The pooling method used in the embedding process. `cls` pooling will generate more accurate embeddings on larger inputs - however, embeddings created with cls pooling are not compatible with embeddings generated with mean pooling. The default pooling method is `mean` in order for this to not be a breaking change, but we highly suggest using the new `cls` pooling for better accuracy.
-         */
-        pooling?: "mean" | "cls";
-      }[];
-    };
-export type Ai_Cf_Baai_Bge_Base_En_V1_5_Output =
-  | {
-      shape?: number[];
-      /**
-       * Embeddings of the requested text values
-       */
-      data?: number[][];
-      /**
-       * The pooling method used in the embedding process.
-       */
-      pooling?: "mean" | "cls";
-    }
-  | Ai_Cf_Baai_Bge_Base_En_V1_5_AsyncResponse;
-export interface Ai_Cf_Baai_Bge_Base_En_V1_5_AsyncResponse {
+export type Ai_Cf_Baai_Bge_Base_En_V1_5_Input = {
+  text: string | string[];
   /**
-   * The async request id that can be used to obtain the results.
+   * The pooling method used in the embedding process. `cls` pooling will generate more accurate embeddings on larger inputs - however, embeddings created with cls pooling are not compatible with embeddings generated with mean pooling. The default pooling method is `mean` in order for this to not be a breaking change, but we highly suggest using the new `cls` pooling for better accuracy.
    */
-  request_id?: string;
-}
+  pooling?: 'mean' | 'cls';
+};
+export type Ai_Cf_Baai_Bge_Base_En_V1_5_Output = {
+  shape?: number[];
+  /**
+   * Embeddings of the requested text values
+   */
+  data?: number[][];
+  /**
+   * The pooling method used in the embedding process.
+   */
+  pooling?: 'mean' | 'cls';
+};
 export declare abstract class Base_Ai_Cf_Baai_Bge_Base_En_V1_5 {
   inputs: Ai_Cf_Baai_Bge_Base_En_V1_5_Input;
   postProcessedOutputs: Ai_Cf_Baai_Bge_Base_En_V1_5_Output;
@@ -1136,140 +1149,70 @@ export declare abstract class Base_Ai_Cf_Openai_Whisper {
   inputs: Ai_Cf_Openai_Whisper_Input;
   postProcessedOutputs: Ai_Cf_Openai_Whisper_Output;
 }
-export type Ai_Cf_Meta_M2M100_1_2B_Input =
-  | {
-      /**
-       * The text to be translated
-       */
-      text: string;
-      /**
-       * The language code of the source text (e.g., 'en' for English). Defaults to 'en' if not specified
-       */
-      source_lang?: string;
-      /**
-       * The language code to translate the text into (e.g., 'es' for Spanish)
-       */
-      target_lang: string;
-    }
-  | {
-      /**
-       * Batch of the embeddings requests to run using async-queue
-       */
-      requests: {
-        /**
-         * The text to be translated
-         */
-        text: string;
-        /**
-         * The language code of the source text (e.g., 'en' for English). Defaults to 'en' if not specified
-         */
-        source_lang?: string;
-        /**
-         * The language code to translate the text into (e.g., 'es' for Spanish)
-         */
-        target_lang: string;
-      }[];
-    };
-export type Ai_Cf_Meta_M2M100_1_2B_Output =
-  | {
-      /**
-       * The translated text in the target language
-       */
-      translated_text?: string;
-    }
-  | Ai_Cf_Meta_M2M100_1_2B_AsyncResponse;
-export interface Ai_Cf_Meta_M2M100_1_2B_AsyncResponse {
+export type Ai_Cf_Meta_M2M100_1_2B_Input = {
   /**
-   * The async request id that can be used to obtain the results.
+   * The text to be translated
    */
-  request_id?: string;
-}
+  text: string;
+  /**
+   * The language code of the source text (e.g., 'en' for English). Defaults to 'en' if not specified
+   */
+  source_lang?: string;
+  /**
+   * The language code to translate the text into (e.g., 'es' for Spanish)
+   */
+  target_lang: string;
+};
+export type Ai_Cf_Meta_M2M100_1_2B_Output = {
+  /**
+   * The translated text in the target language
+   */
+  translated_text?: string;
+};
 export declare abstract class Base_Ai_Cf_Meta_M2M100_1_2B {
   inputs: Ai_Cf_Meta_M2M100_1_2B_Input;
   postProcessedOutputs: Ai_Cf_Meta_M2M100_1_2B_Output;
 }
-export type Ai_Cf_Baai_Bge_Small_En_V1_5_Input =
-  | {
-      text: string | string[];
-      /**
-       * The pooling method used in the embedding process. `cls` pooling will generate more accurate embeddings on larger inputs - however, embeddings created with cls pooling are not compatible with embeddings generated with mean pooling. The default pooling method is `mean` in order for this to not be a breaking change, but we highly suggest using the new `cls` pooling for better accuracy.
-       */
-      pooling?: "mean" | "cls";
-    }
-  | {
-      /**
-       * Batch of the embeddings requests to run using async-queue
-       */
-      requests: {
-        text: string | string[];
-        /**
-         * The pooling method used in the embedding process. `cls` pooling will generate more accurate embeddings on larger inputs - however, embeddings created with cls pooling are not compatible with embeddings generated with mean pooling. The default pooling method is `mean` in order for this to not be a breaking change, but we highly suggest using the new `cls` pooling for better accuracy.
-         */
-        pooling?: "mean" | "cls";
-      }[];
-    };
-export type Ai_Cf_Baai_Bge_Small_En_V1_5_Output =
-  | {
-      shape?: number[];
-      /**
-       * Embeddings of the requested text values
-       */
-      data?: number[][];
-      /**
-       * The pooling method used in the embedding process.
-       */
-      pooling?: "mean" | "cls";
-    }
-  | Ai_Cf_Baai_Bge_Small_En_V1_5_AsyncResponse;
-export interface Ai_Cf_Baai_Bge_Small_En_V1_5_AsyncResponse {
+export type Ai_Cf_Baai_Bge_Small_En_V1_5_Input = {
+  text: string | string[];
   /**
-   * The async request id that can be used to obtain the results.
+   * The pooling method used in the embedding process. `cls` pooling will generate more accurate embeddings on larger inputs - however, embeddings created with cls pooling are not compatible with embeddings generated with mean pooling. The default pooling method is `mean` in order for this to not be a breaking change, but we highly suggest using the new `cls` pooling for better accuracy.
    */
-  request_id?: string;
-}
+  pooling?: 'mean' | 'cls';
+};
+export type Ai_Cf_Baai_Bge_Small_En_V1_5_Output = {
+  shape?: number[];
+  /**
+   * Embeddings of the requested text values
+   */
+  data?: number[][];
+  /**
+   * The pooling method used in the embedding process.
+   */
+  pooling?: 'mean' | 'cls';
+};
 export declare abstract class Base_Ai_Cf_Baai_Bge_Small_En_V1_5 {
   inputs: Ai_Cf_Baai_Bge_Small_En_V1_5_Input;
   postProcessedOutputs: Ai_Cf_Baai_Bge_Small_En_V1_5_Output;
 }
-export type Ai_Cf_Baai_Bge_Large_En_V1_5_Input =
-  | {
-      text: string | string[];
-      /**
-       * The pooling method used in the embedding process. `cls` pooling will generate more accurate embeddings on larger inputs - however, embeddings created with cls pooling are not compatible with embeddings generated with mean pooling. The default pooling method is `mean` in order for this to not be a breaking change, but we highly suggest using the new `cls` pooling for better accuracy.
-       */
-      pooling?: "mean" | "cls";
-    }
-  | {
-      /**
-       * Batch of the embeddings requests to run using async-queue
-       */
-      requests: {
-        text: string | string[];
-        /**
-         * The pooling method used in the embedding process. `cls` pooling will generate more accurate embeddings on larger inputs - however, embeddings created with cls pooling are not compatible with embeddings generated with mean pooling. The default pooling method is `mean` in order for this to not be a breaking change, but we highly suggest using the new `cls` pooling for better accuracy.
-         */
-        pooling?: "mean" | "cls";
-      }[];
-    };
-export type Ai_Cf_Baai_Bge_Large_En_V1_5_Output =
-  | {
-      shape?: number[];
-      /**
-       * Embeddings of the requested text values
-       */
-      data?: number[][];
-      /**
-       * The pooling method used in the embedding process.
-       */
-      pooling?: "mean" | "cls";
-    }
-  | Ai_Cf_Baai_Bge_Large_En_V1_5_AsyncResponse;
-export interface Ai_Cf_Baai_Bge_Large_En_V1_5_AsyncResponse {
+export type Ai_Cf_Baai_Bge_Large_En_V1_5_Input = {
+  text: string | string[];
   /**
-   * The async request id that can be used to obtain the results.
+   * The pooling method used in the embedding process. `cls` pooling will generate more accurate embeddings on larger inputs - however, embeddings created with cls pooling are not compatible with embeddings generated with mean pooling. The default pooling method is `mean` in order for this to not be a breaking change, but we highly suggest using the new `cls` pooling for better accuracy.
    */
-  request_id?: string;
-}
+  pooling?: 'mean' | 'cls';
+};
+export type Ai_Cf_Baai_Bge_Large_En_V1_5_Output = {
+  shape?: number[];
+  /**
+   * Embeddings of the requested text values
+   */
+  data?: number[][];
+  /**
+   * The pooling method used in the embedding process.
+   */
+  pooling?: 'mean' | 'cls';
+};
 export declare abstract class Base_Ai_Cf_Baai_Bge_Large_En_V1_5 {
   inputs: Ai_Cf_Baai_Bge_Large_En_V1_5_Input;
   postProcessedOutputs: Ai_Cf_Baai_Bge_Large_En_V1_5_Output;
@@ -1487,13 +1430,7 @@ export declare abstract class Base_Ai_Cf_Openai_Whisper_Large_V3_Turbo {
 }
 export type Ai_Cf_Baai_Bge_M3_Input =
   | Ai_Cf_Baai_Bge_M3_Input_QueryAnd_Contexts
-  | Ai_Cf_Baai_Bge_M3_Input_Embedding
-  | {
-      /**
-       * Batch of the embeddings requests to run using async-queue
-       */
-      requests: (Ai_Cf_Baai_Bge_M3_Input_QueryAnd_Contexts_1 | Ai_Cf_Baai_Bge_M3_Input_Embedding_1)[];
-    };
+  | Ai_Cf_Baai_Bge_M3_Input_Embedding;
 export interface Ai_Cf_Baai_Bge_M3_Input_QueryAnd_Contexts {
   /**
    * A query you wish to perform against the provided contexts. If no query is provided the model with respond with embeddings for contexts
@@ -1520,37 +1457,11 @@ export interface Ai_Cf_Baai_Bge_M3_Input_Embedding {
    */
   truncate_inputs?: boolean;
 }
-export interface Ai_Cf_Baai_Bge_M3_Input_QueryAnd_Contexts_1 {
-  /**
-   * A query you wish to perform against the provided contexts. If no query is provided the model with respond with embeddings for contexts
-   */
-  query?: string;
-  /**
-   * List of provided contexts. Note that the index in this array is important, as the response will refer to it.
-   */
-  contexts: {
-    /**
-     * One of the provided context content
-     */
-    text?: string;
-  }[];
-  /**
-   * When provided with too long context should the model error out or truncate the context to fit?
-   */
-  truncate_inputs?: boolean;
-}
-export interface Ai_Cf_Baai_Bge_M3_Input_Embedding_1 {
-  text: string | string[];
-  /**
-   * When provided with too long context should the model error out or truncate the context to fit?
-   */
-  truncate_inputs?: boolean;
-}
+
 export type Ai_Cf_Baai_Bge_M3_Output =
   | Ai_Cf_Baai_Bge_M3_Output_Query
   | Ai_Cf_Baai_Bge_M3_Output_EmbeddingFor_Contexts
-  | Ai_Cf_Baai_Bge_M3_Output_Embedding
-  | Ai_Cf_Baai_Bge_M3_AsyncResponse;
+  | Ai_Cf_Baai_Bge_M3_Output_Embedding;
 export interface Ai_Cf_Baai_Bge_M3_Output_Query {
   response?: {
     /**
@@ -1569,7 +1480,7 @@ export interface Ai_Cf_Baai_Bge_M3_Output_EmbeddingFor_Contexts {
   /**
    * The pooling method used in the embedding process.
    */
-  pooling?: "mean" | "cls";
+  pooling?: 'mean' | 'cls';
 }
 export interface Ai_Cf_Baai_Bge_M3_Output_Embedding {
   shape?: number[];
@@ -1580,14 +1491,9 @@ export interface Ai_Cf_Baai_Bge_M3_Output_Embedding {
   /**
    * The pooling method used in the embedding process.
    */
-  pooling?: "mean" | "cls";
+  pooling?: 'mean' | 'cls';
 }
-export interface Ai_Cf_Baai_Bge_M3_AsyncResponse {
-  /**
-   * The async request id that can be used to obtain the results.
-   */
-  request_id?: string;
-}
+
 export declare abstract class Base_Ai_Cf_Baai_Bge_M3 {
   inputs: Ai_Cf_Baai_Bge_M3_Input;
   postProcessedOutputs: Ai_Cf_Baai_Bge_M3_Output;
@@ -1865,8 +1771,7 @@ export declare abstract class Base_Ai_Cf_Meta_Llama_3_2_11B_Vision_Instruct {
 }
 export type Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Input =
   | Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Prompt
-  | Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Messages
-  | Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Async_Batch;
+  | Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Messages;
 export interface Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Prompt {
   /**
    * The input text prompt for the model to generate a response.
@@ -1919,7 +1824,7 @@ export interface Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Prompt {
   presence_penalty?: number;
 }
 export interface Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_JSON_Mode {
-  type?: "json_object" | "json_schema";
+  type?: 'json_object' | 'json_schema';
   json_schema?: unknown;
 }
 export interface Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Messages {
@@ -2081,58 +1986,10 @@ export interface Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Messages {
   presence_penalty?: number;
 }
 export interface Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_JSON_Mode_1 {
-  type?: "json_object" | "json_schema";
+  type?: 'json_object' | 'json_schema';
   json_schema?: unknown;
 }
-export interface Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Async_Batch {
-  requests?: {
-    /**
-     * User-supplied reference. This field will be present in the response as well it can be used to reference the request and response. It's NOT validated to be unique.
-     */
-    external_reference?: string;
-    /**
-     * Prompt for the text generation model
-     */
-    prompt?: string;
-    /**
-     * If true, the response will be streamed back incrementally using SSE, Server Sent Events.
-     */
-    stream?: boolean;
-    /**
-     * The maximum number of tokens to generate in the response.
-     */
-    max_tokens?: number;
-    /**
-     * Controls the randomness of the output; higher values produce more random results.
-     */
-    temperature?: number;
-    /**
-     * Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses.
-     */
-    top_p?: number;
-    /**
-     * Random seed for reproducibility of the generation.
-     */
-    seed?: number;
-    /**
-     * Penalty for repeated tokens; higher values discourage repetition.
-     */
-    repetition_penalty?: number;
-    /**
-     * Decreases the likelihood of the model repeating the same lines verbatim.
-     */
-    frequency_penalty?: number;
-    /**
-     * Increases the likelihood of the model introducing new topics.
-     */
-    presence_penalty?: number;
-    response_format?: Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_JSON_Mode_2;
-  }[];
-}
-export interface Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_JSON_Mode_2 {
-  type?: "json_object" | "json_schema";
-  json_schema?: unknown;
-}
+
 export type Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Output =
   | {
       /**
@@ -2170,14 +2027,7 @@ export type Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Output =
         name?: string;
       }[];
     }
-  | string
-  | Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_AsyncResponse;
-export interface Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_AsyncResponse {
-  /**
-   * The async request id that can be used to obtain the results.
-   */
-  request_id?: string;
-}
+  | string;
 export declare abstract class Base_Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast {
   inputs: Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Input;
   postProcessedOutputs: Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Output;
@@ -2190,7 +2040,7 @@ export interface Ai_Cf_Meta_Llama_Guard_3_8B_Input {
     /**
      * The role of the message sender must alternate between 'user' and 'assistant'.
      */
-    role: "user" | "assistant";
+    role: 'user' | 'assistant';
     /**
      * The content of the message as a string.
      */
@@ -2338,7 +2188,7 @@ export interface Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct_Prompt {
   presence_penalty?: number;
 }
 export interface Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct_JSON_Mode {
-  type?: "json_object" | "json_schema";
+  type?: 'json_object' | 'json_schema';
   json_schema?: unknown;
 }
 export interface Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct_Messages {
@@ -2492,7 +2342,7 @@ export interface Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct_Messages {
   presence_penalty?: number;
 }
 export interface Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct_JSON_Mode_1 {
-  type?: "json_object" | "json_schema";
+  type?: 'json_object' | 'json_schema';
   json_schema?: unknown;
 }
 export type Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct_Output = {
@@ -2535,7 +2385,9 @@ export declare abstract class Base_Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct {
   inputs: Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct_Input;
   postProcessedOutputs: Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct_Output;
 }
-export type Ai_Cf_Qwen_Qwq_32B_Input = Ai_Cf_Qwen_Qwq_32B_Prompt | Ai_Cf_Qwen_Qwq_32B_Messages;
+export type Ai_Cf_Qwen_Qwq_32B_Input =
+  | Ai_Cf_Qwen_Qwq_32B_Prompt
+  | Ai_Cf_Qwen_Qwq_32B_Messages;
 export interface Ai_Cf_Qwen_Qwq_32B_Prompt {
   /**
    * The input text prompt for the model to generate a response.
@@ -3340,8 +3192,7 @@ export declare abstract class Base_Ai_Cf_Google_Gemma_3_12B_It {
 }
 export type Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Input =
   | Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Prompt
-  | Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Messages
-  | Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Async_Batch;
+  | Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Messages;
 export interface Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Prompt {
   /**
    * The input text prompt for the model to generate a response.
@@ -3394,7 +3245,7 @@ export interface Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Prompt {
   presence_penalty?: number;
 }
 export interface Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_JSON_Mode {
-  type?: "json_object" | "json_schema";
+  type?: 'json_object' | 'json_schema';
   json_schema?: unknown;
 }
 export interface Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Messages {
@@ -3579,245 +3430,7 @@ export interface Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Messages {
    */
   presence_penalty?: number;
 }
-export interface Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Async_Batch {
-  requests: (
-    | Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Prompt_Inner
-    | Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Messages_Inner
-  )[];
-}
-export interface Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Prompt_Inner {
-  /**
-   * The input text prompt for the model to generate a response.
-   */
-  prompt: string;
-  /**
-   * JSON schema that should be fulfilled for the response.
-   */
-  guided_json?: object;
-  response_format?: Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_JSON_Mode;
-  /**
-   * If true, a chat template is not applied and you must adhere to the specific model's expected formatting.
-   */
-  raw?: boolean;
-  /**
-   * If true, the response will be streamed back incrementally using SSE, Server Sent Events.
-   */
-  stream?: boolean;
-  /**
-   * The maximum number of tokens to generate in the response.
-   */
-  max_tokens?: number;
-  /**
-   * Controls the randomness of the output; higher values produce more random results.
-   */
-  temperature?: number;
-  /**
-   * Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses.
-   */
-  top_p?: number;
-  /**
-   * Limits the AI to choose from the top 'k' most probable words. Lower values make responses more focused; higher values introduce more variety and potential surprises.
-   */
-  top_k?: number;
-  /**
-   * Random seed for reproducibility of the generation.
-   */
-  seed?: number;
-  /**
-   * Penalty for repeated tokens; higher values discourage repetition.
-   */
-  repetition_penalty?: number;
-  /**
-   * Decreases the likelihood of the model repeating the same lines verbatim.
-   */
-  frequency_penalty?: number;
-  /**
-   * Increases the likelihood of the model introducing new topics.
-   */
-  presence_penalty?: number;
-}
-export interface Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Messages_Inner {
-  /**
-   * An array of message objects representing the conversation history.
-   */
-  messages: {
-    /**
-     * The role of the message sender (e.g., 'user', 'assistant', 'system', 'tool').
-     */
-    role?: string;
-    /**
-     * The tool call id. If you don't know what to put here you can fall back to 000000001
-     */
-    tool_call_id?: string;
-    content?:
-      | string
-      | {
-          /**
-           * Type of the content provided
-           */
-          type?: string;
-          text?: string;
-          image_url?: {
-            /**
-             * image uri with data (e.g. data:image/jpeg;base64,/9j/...). HTTP URL will not be accepted
-             */
-            url?: string;
-          };
-        }[]
-      | {
-          /**
-           * Type of the content provided
-           */
-          type?: string;
-          text?: string;
-          image_url?: {
-            /**
-             * image uri with data (e.g. data:image/jpeg;base64,/9j/...). HTTP URL will not be accepted
-             */
-            url?: string;
-          };
-        };
-  }[];
-  functions?: {
-    name: string;
-    code: string;
-  }[];
-  /**
-   * A list of tools available for the assistant to use.
-   */
-  tools?: (
-    | {
-        /**
-         * The name of the tool. More descriptive the better.
-         */
-        name: string;
-        /**
-         * A brief description of what the tool does.
-         */
-        description: string;
-        /**
-         * Schema defining the parameters accepted by the tool.
-         */
-        parameters: {
-          /**
-           * The type of the parameters object (usually 'object').
-           */
-          type: string;
-          /**
-           * List of required parameter names.
-           */
-          required?: string[];
-          /**
-           * Definitions of each parameter.
-           */
-          properties: {
-            [k: string]: {
-              /**
-               * The data type of the parameter.
-               */
-              type: string;
-              /**
-               * A description of the expected parameter.
-               */
-              description: string;
-            };
-          };
-        };
-      }
-    | {
-        /**
-         * Specifies the type of tool (e.g., 'function').
-         */
-        type: string;
-        /**
-         * Details of the function tool.
-         */
-        function: {
-          /**
-           * The name of the function.
-           */
-          name: string;
-          /**
-           * A brief description of what the function does.
-           */
-          description: string;
-          /**
-           * Schema defining the parameters accepted by the function.
-           */
-          parameters: {
-            /**
-             * The type of the parameters object (usually 'object').
-             */
-            type: string;
-            /**
-             * List of required parameter names.
-             */
-            required?: string[];
-            /**
-             * Definitions of each parameter.
-             */
-            properties: {
-              [k: string]: {
-                /**
-                 * The data type of the parameter.
-                 */
-                type: string;
-                /**
-                 * A description of the expected parameter.
-                 */
-                description: string;
-              };
-            };
-          };
-        };
-      }
-  )[];
-  response_format?: Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_JSON_Mode;
-  /**
-   * JSON schema that should be fufilled for the response.
-   */
-  guided_json?: object;
-  /**
-   * If true, a chat template is not applied and you must adhere to the specific model's expected formatting.
-   */
-  raw?: boolean;
-  /**
-   * If true, the response will be streamed back incrementally using SSE, Server Sent Events.
-   */
-  stream?: boolean;
-  /**
-   * The maximum number of tokens to generate in the response.
-   */
-  max_tokens?: number;
-  /**
-   * Controls the randomness of the output; higher values produce more random results.
-   */
-  temperature?: number;
-  /**
-   * Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses.
-   */
-  top_p?: number;
-  /**
-   * Limits the AI to choose from the top 'k' most probable words. Lower values make responses more focused; higher values introduce more variety and potential surprises.
-   */
-  top_k?: number;
-  /**
-   * Random seed for reproducibility of the generation.
-   */
-  seed?: number;
-  /**
-   * Penalty for repeated tokens; higher values discourage repetition.
-   */
-  repetition_penalty?: number;
-  /**
-   * Decreases the likelihood of the model repeating the same lines verbatim.
-   */
-  frequency_penalty?: number;
-  /**
-   * Increases the likelihood of the model introducing new topics.
-   */
-  presence_penalty?: number;
-}
+
 export type Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Output = {
   /**
    * The generated text response from the model
@@ -3873,8 +3486,7 @@ export declare abstract class Base_Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct {
 }
 export type Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Input =
   | Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Prompt
-  | Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Messages
-  | Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Async_Batch;
+  | Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Messages;
 export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Prompt {
   /**
    * The input text prompt for the model to generate a response.
@@ -3927,7 +3539,7 @@ export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Prompt {
   presence_penalty?: number;
 }
 export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_JSON_Mode {
-  type?: "json_object" | "json_schema";
+  type?: 'json_object' | 'json_schema';
   json_schema?: unknown;
 }
 export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Messages {
@@ -4089,234 +3701,14 @@ export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Messages {
   presence_penalty?: number;
 }
 export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_JSON_Mode_1 {
-  type?: "json_object" | "json_schema";
+  type?: 'json_object' | 'json_schema';
   json_schema?: unknown;
 }
-export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Async_Batch {
-  requests: (Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Prompt_1 | Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Messages_1)[];
-}
-export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Prompt_1 {
-  /**
-   * The input text prompt for the model to generate a response.
-   */
-  prompt: string;
-  /**
-   * Name of the LoRA (Low-Rank Adaptation) model to fine-tune the base model.
-   */
-  lora?: string;
-  response_format?: Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_JSON_Mode_2;
-  /**
-   * If true, a chat template is not applied and you must adhere to the specific model's expected formatting.
-   */
-  raw?: boolean;
-  /**
-   * If true, the response will be streamed back incrementally using SSE, Server Sent Events.
-   */
-  stream?: boolean;
-  /**
-   * The maximum number of tokens to generate in the response.
-   */
-  max_tokens?: number;
-  /**
-   * Controls the randomness of the output; higher values produce more random results.
-   */
-  temperature?: number;
-  /**
-   * Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses.
-   */
-  top_p?: number;
-  /**
-   * Limits the AI to choose from the top 'k' most probable words. Lower values make responses more focused; higher values introduce more variety and potential surprises.
-   */
-  top_k?: number;
-  /**
-   * Random seed for reproducibility of the generation.
-   */
-  seed?: number;
-  /**
-   * Penalty for repeated tokens; higher values discourage repetition.
-   */
-  repetition_penalty?: number;
-  /**
-   * Decreases the likelihood of the model repeating the same lines verbatim.
-   */
-  frequency_penalty?: number;
-  /**
-   * Increases the likelihood of the model introducing new topics.
-   */
-  presence_penalty?: number;
-}
-export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_JSON_Mode_2 {
-  type?: "json_object" | "json_schema";
-  json_schema?: unknown;
-}
-export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Messages_1 {
-  /**
-   * An array of message objects representing the conversation history.
-   */
-  messages: {
-    /**
-     * The role of the message sender (e.g., 'user', 'assistant', 'system', 'tool').
-     */
-    role: string;
-    content:
-      | string
-      | {
-          /**
-           * Type of the content (text)
-           */
-          type?: string;
-          /**
-           * Text content
-           */
-          text?: string;
-        }[];
-  }[];
-  functions?: {
-    name: string;
-    code: string;
-  }[];
-  /**
-   * A list of tools available for the assistant to use.
-   */
-  tools?: (
-    | {
-        /**
-         * The name of the tool. More descriptive the better.
-         */
-        name: string;
-        /**
-         * A brief description of what the tool does.
-         */
-        description: string;
-        /**
-         * Schema defining the parameters accepted by the tool.
-         */
-        parameters: {
-          /**
-           * The type of the parameters object (usually 'object').
-           */
-          type: string;
-          /**
-           * List of required parameter names.
-           */
-          required?: string[];
-          /**
-           * Definitions of each parameter.
-           */
-          properties: {
-            [k: string]: {
-              /**
-               * The data type of the parameter.
-               */
-              type: string;
-              /**
-               * A description of the expected parameter.
-               */
-              description: string;
-            };
-          };
-        };
-      }
-    | {
-        /**
-         * Specifies the type of tool (e.g., 'function').
-         */
-        type: string;
-        /**
-         * Details of the function tool.
-         */
-        function: {
-          /**
-           * The name of the function.
-           */
-          name: string;
-          /**
-           * A brief description of what the function does.
-           */
-          description: string;
-          /**
-           * Schema defining the parameters accepted by the function.
-           */
-          parameters: {
-            /**
-             * The type of the parameters object (usually 'object').
-             */
-            type: string;
-            /**
-             * List of required parameter names.
-             */
-            required?: string[];
-            /**
-             * Definitions of each parameter.
-             */
-            properties: {
-              [k: string]: {
-                /**
-                 * The data type of the parameter.
-                 */
-                type: string;
-                /**
-                 * A description of the expected parameter.
-                 */
-                description: string;
-              };
-            };
-          };
-        };
-      }
-  )[];
-  response_format?: Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_JSON_Mode_3;
-  /**
-   * If true, a chat template is not applied and you must adhere to the specific model's expected formatting.
-   */
-  raw?: boolean;
-  /**
-   * If true, the response will be streamed back incrementally using SSE, Server Sent Events.
-   */
-  stream?: boolean;
-  /**
-   * The maximum number of tokens to generate in the response.
-   */
-  max_tokens?: number;
-  /**
-   * Controls the randomness of the output; higher values produce more random results.
-   */
-  temperature?: number;
-  /**
-   * Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses.
-   */
-  top_p?: number;
-  /**
-   * Limits the AI to choose from the top 'k' most probable words. Lower values make responses more focused; higher values introduce more variety and potential surprises.
-   */
-  top_k?: number;
-  /**
-   * Random seed for reproducibility of the generation.
-   */
-  seed?: number;
-  /**
-   * Penalty for repeated tokens; higher values discourage repetition.
-   */
-  repetition_penalty?: number;
-  /**
-   * Decreases the likelihood of the model repeating the same lines verbatim.
-   */
-  frequency_penalty?: number;
-  /**
-   * Increases the likelihood of the model introducing new topics.
-   */
-  presence_penalty?: number;
-}
-export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_JSON_Mode_3 {
-  type?: "json_object" | "json_schema";
-  json_schema?: unknown;
-}
+
 export type Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Output =
   | Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Chat_Completion_Response
   | Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Text_Completion_Response
-  | string
-  | Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_AsyncResponse;
+  | string;
 export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Chat_Completion_Response {
   /**
    * Unique identifier for the completion
@@ -4325,7 +3717,7 @@ export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Chat_Completion_Response {
   /**
    * Object type identifier
    */
-  object?: "chat.completion";
+  object?: 'chat.completion';
   /**
    * Unix timestamp of when the completion was created
    */
@@ -4369,7 +3761,7 @@ export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Chat_Completion_Response {
         /**
          * Type of tool call
          */
-        type: "function";
+        type: 'function';
         function: {
           /**
            * Name of the function to call
@@ -4425,7 +3817,7 @@ export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Text_Completion_Response {
   /**
    * Object type identifier
    */
-  object?: "text_completion";
+  object?: 'text_completion';
   /**
    * Unix timestamp of when the completion was created
    */
@@ -4481,12 +3873,7 @@ export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Text_Completion_Response {
     total_tokens?: number;
   };
 }
-export interface Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_AsyncResponse {
-  /**
-   * The async request id that can be used to obtain the results.
-   */
-  request_id?: string;
-}
+
 export declare abstract class Base_Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8 {
   inputs: Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Input;
   postProcessedOutputs: Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Output;
@@ -4499,7 +3886,7 @@ export interface Ai_Cf_Deepgram_Nova_3_Input {
   /**
    * Sets how the model will interpret strings submitted to the custom_topic param. When strict, the model will only return topics submitted using the custom_topic param. When extended, the model will return its own detected topics in addition to those submitted using the custom_topic param.
    */
-  custom_topic_mode?: "extended" | "strict";
+  custom_topic_mode?: 'extended' | 'strict';
   /**
    * Custom topics you want the model to detect within your input audio or text if present Submit up to 100
    */
@@ -4507,7 +3894,7 @@ export interface Ai_Cf_Deepgram_Nova_3_Input {
   /**
    * Sets how the model will interpret intents submitted to the custom_intent param. When strict, the model will only return intents submitted using the custom_intent param. When extended, the model will return its own detected intents in addition those submitted using the custom_intents param
    */
-  custom_intent_mode?: "extended" | "strict";
+  custom_intent_mode?: 'extended' | 'strict';
   /**
    * Custom intents you want the model to detect within your input audio if present
    */
@@ -4531,7 +3918,15 @@ export interface Ai_Cf_Deepgram_Nova_3_Input {
   /**
    * Specify the expected encoding of your submitted audio
    */
-  encoding?: "linear16" | "flac" | "mulaw" | "amr-nb" | "amr-wb" | "opus" | "speex" | "g729";
+  encoding?:
+    | 'linear16'
+    | 'flac'
+    | 'mulaw'
+    | 'amr-nb'
+    | 'amr-wb'
+    | 'opus'
+    | 'speex'
+    | 'g729';
   /**
    * Arbitrary key-value pairs that are attached to the API response for usage in downstream processing
    */
@@ -4563,7 +3958,7 @@ export interface Ai_Cf_Deepgram_Nova_3_Input {
   /**
    * Mode of operation for the model representing broad area of topic that will be talked about in the supplied audio
    */
-  mode?: "general" | "medical" | "finance";
+  mode?: 'general' | 'medical' | 'finance';
   /**
    * Transcribe each audio channel independently.
    */
@@ -4703,7 +4098,7 @@ export type Ai_Cf_Pipecat_Ai_Smart_Turn_V2_Input =
       /**
        * type of data PCM data that's sent to the inference server as raw array
        */
-      dtype?: "uint8" | "float32" | "float64";
+      dtype?: 'uint8' | 'float32' | 'float64';
     }
   | {
       /**
@@ -4713,7 +4108,7 @@ export type Ai_Cf_Pipecat_Ai_Smart_Turn_V2_Input =
       /**
        * type of data PCM data that's sent to the inference server as raw array
        */
-      dtype?: "uint8" | "float32" | "float64";
+      dtype?: 'uint8' | 'float32' | 'float64';
     };
 export interface Ai_Cf_Pipecat_Ai_Smart_Turn_V2_Output {
   /**
@@ -4820,26 +4215,26 @@ export interface Ai_Cf_Deepgram_Aura_1_Input {
    * Speaker used to produce the audio.
    */
   speaker?:
-    | "angus"
-    | "asteria"
-    | "arcas"
-    | "orion"
-    | "orpheus"
-    | "athena"
-    | "luna"
-    | "zeus"
-    | "perseus"
-    | "helios"
-    | "hera"
-    | "stella";
+    | 'angus'
+    | 'asteria'
+    | 'arcas'
+    | 'orion'
+    | 'orpheus'
+    | 'athena'
+    | 'luna'
+    | 'zeus'
+    | 'perseus'
+    | 'helios'
+    | 'hera'
+    | 'stella';
   /**
    * Encoding of the output audio.
    */
-  encoding?: "linear16" | "flac" | "mulaw" | "alaw" | "mp3" | "opus" | "aac";
+  encoding?: 'linear16' | 'flac' | 'mulaw' | 'alaw' | 'mp3' | 'opus' | 'aac';
   /**
    * Container specifies the file format wrapper for the output audio. The available options depend on the encoding type..
    */
-  container?: "none" | "wav" | "ogg";
+  container?: 'none' | 'wav' | 'ogg';
   /**
    * The text content to be converted to speech
    */
@@ -4870,40 +4265,40 @@ export interface Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Input {
    * Target langauge to translate to
    */
   target_language:
-    | "asm_Beng"
-    | "awa_Deva"
-    | "ben_Beng"
-    | "bho_Deva"
-    | "brx_Deva"
-    | "doi_Deva"
-    | "eng_Latn"
-    | "gom_Deva"
-    | "gon_Deva"
-    | "guj_Gujr"
-    | "hin_Deva"
-    | "hne_Deva"
-    | "kan_Knda"
-    | "kas_Arab"
-    | "kas_Deva"
-    | "kha_Latn"
-    | "lus_Latn"
-    | "mag_Deva"
-    | "mai_Deva"
-    | "mal_Mlym"
-    | "mar_Deva"
-    | "mni_Beng"
-    | "mni_Mtei"
-    | "npi_Deva"
-    | "ory_Orya"
-    | "pan_Guru"
-    | "san_Deva"
-    | "sat_Olck"
-    | "snd_Arab"
-    | "snd_Deva"
-    | "tam_Taml"
-    | "tel_Telu"
-    | "urd_Arab"
-    | "unr_Deva";
+    | 'asm_Beng'
+    | 'awa_Deva'
+    | 'ben_Beng'
+    | 'bho_Deva'
+    | 'brx_Deva'
+    | 'doi_Deva'
+    | 'eng_Latn'
+    | 'gom_Deva'
+    | 'gon_Deva'
+    | 'guj_Gujr'
+    | 'hin_Deva'
+    | 'hne_Deva'
+    | 'kan_Knda'
+    | 'kas_Arab'
+    | 'kas_Deva'
+    | 'kha_Latn'
+    | 'lus_Latn'
+    | 'mag_Deva'
+    | 'mai_Deva'
+    | 'mal_Mlym'
+    | 'mar_Deva'
+    | 'mni_Beng'
+    | 'mni_Mtei'
+    | 'npi_Deva'
+    | 'ory_Orya'
+    | 'pan_Guru'
+    | 'san_Deva'
+    | 'sat_Olck'
+    | 'snd_Arab'
+    | 'snd_Deva'
+    | 'tam_Taml'
+    | 'tel_Telu'
+    | 'urd_Arab'
+    | 'unr_Deva';
 }
 export interface Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Output {
   /**
@@ -4917,8 +4312,7 @@ export declare abstract class Base_Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B {
 }
 export type Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Input =
   | Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Prompt
-  | Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Messages
-  | Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Async_Batch;
+  | Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Messages;
 export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Prompt {
   /**
    * The input text prompt for the model to generate a response.
@@ -4971,7 +4365,7 @@ export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Prompt {
   presence_penalty?: number;
 }
 export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_JSON_Mode {
-  type?: "json_object" | "json_schema";
+  type?: 'json_object' | 'json_schema';
   json_schema?: unknown;
 }
 export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Messages {
@@ -5133,237 +4527,14 @@ export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Messages {
   presence_penalty?: number;
 }
 export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_JSON_Mode_1 {
-  type?: "json_object" | "json_schema";
+  type?: 'json_object' | 'json_schema';
   json_schema?: unknown;
 }
-export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Async_Batch {
-  requests: (
-    | Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Prompt_1
-    | Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Messages_1
-  )[];
-}
-export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Prompt_1 {
-  /**
-   * The input text prompt for the model to generate a response.
-   */
-  prompt: string;
-  /**
-   * Name of the LoRA (Low-Rank Adaptation) model to fine-tune the base model.
-   */
-  lora?: string;
-  response_format?: Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_JSON_Mode_2;
-  /**
-   * If true, a chat template is not applied and you must adhere to the specific model's expected formatting.
-   */
-  raw?: boolean;
-  /**
-   * If true, the response will be streamed back incrementally using SSE, Server Sent Events.
-   */
-  stream?: boolean;
-  /**
-   * The maximum number of tokens to generate in the response.
-   */
-  max_tokens?: number;
-  /**
-   * Controls the randomness of the output; higher values produce more random results.
-   */
-  temperature?: number;
-  /**
-   * Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses.
-   */
-  top_p?: number;
-  /**
-   * Limits the AI to choose from the top 'k' most probable words. Lower values make responses more focused; higher values introduce more variety and potential surprises.
-   */
-  top_k?: number;
-  /**
-   * Random seed for reproducibility of the generation.
-   */
-  seed?: number;
-  /**
-   * Penalty for repeated tokens; higher values discourage repetition.
-   */
-  repetition_penalty?: number;
-  /**
-   * Decreases the likelihood of the model repeating the same lines verbatim.
-   */
-  frequency_penalty?: number;
-  /**
-   * Increases the likelihood of the model introducing new topics.
-   */
-  presence_penalty?: number;
-}
-export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_JSON_Mode_2 {
-  type?: "json_object" | "json_schema";
-  json_schema?: unknown;
-}
-export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Messages_1 {
-  /**
-   * An array of message objects representing the conversation history.
-   */
-  messages: {
-    /**
-     * The role of the message sender (e.g., 'user', 'assistant', 'system', 'tool').
-     */
-    role: string;
-    content:
-      | string
-      | {
-          /**
-           * Type of the content (text)
-           */
-          type?: string;
-          /**
-           * Text content
-           */
-          text?: string;
-        }[];
-  }[];
-  functions?: {
-    name: string;
-    code: string;
-  }[];
-  /**
-   * A list of tools available for the assistant to use.
-   */
-  tools?: (
-    | {
-        /**
-         * The name of the tool. More descriptive the better.
-         */
-        name: string;
-        /**
-         * A brief description of what the tool does.
-         */
-        description: string;
-        /**
-         * Schema defining the parameters accepted by the tool.
-         */
-        parameters: {
-          /**
-           * The type of the parameters object (usually 'object').
-           */
-          type: string;
-          /**
-           * List of required parameter names.
-           */
-          required?: string[];
-          /**
-           * Definitions of each parameter.
-           */
-          properties: {
-            [k: string]: {
-              /**
-               * The data type of the parameter.
-               */
-              type: string;
-              /**
-               * A description of the expected parameter.
-               */
-              description: string;
-            };
-          };
-        };
-      }
-    | {
-        /**
-         * Specifies the type of tool (e.g., 'function').
-         */
-        type: string;
-        /**
-         * Details of the function tool.
-         */
-        function: {
-          /**
-           * The name of the function.
-           */
-          name: string;
-          /**
-           * A brief description of what the function does.
-           */
-          description: string;
-          /**
-           * Schema defining the parameters accepted by the function.
-           */
-          parameters: {
-            /**
-             * The type of the parameters object (usually 'object').
-             */
-            type: string;
-            /**
-             * List of required parameter names.
-             */
-            required?: string[];
-            /**
-             * Definitions of each parameter.
-             */
-            properties: {
-              [k: string]: {
-                /**
-                 * The data type of the parameter.
-                 */
-                type: string;
-                /**
-                 * A description of the expected parameter.
-                 */
-                description: string;
-              };
-            };
-          };
-        };
-      }
-  )[];
-  response_format?: Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_JSON_Mode_3;
-  /**
-   * If true, a chat template is not applied and you must adhere to the specific model's expected formatting.
-   */
-  raw?: boolean;
-  /**
-   * If true, the response will be streamed back incrementally using SSE, Server Sent Events.
-   */
-  stream?: boolean;
-  /**
-   * The maximum number of tokens to generate in the response.
-   */
-  max_tokens?: number;
-  /**
-   * Controls the randomness of the output; higher values produce more random results.
-   */
-  temperature?: number;
-  /**
-   * Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses.
-   */
-  top_p?: number;
-  /**
-   * Limits the AI to choose from the top 'k' most probable words. Lower values make responses more focused; higher values introduce more variety and potential surprises.
-   */
-  top_k?: number;
-  /**
-   * Random seed for reproducibility of the generation.
-   */
-  seed?: number;
-  /**
-   * Penalty for repeated tokens; higher values discourage repetition.
-   */
-  repetition_penalty?: number;
-  /**
-   * Decreases the likelihood of the model repeating the same lines verbatim.
-   */
-  frequency_penalty?: number;
-  /**
-   * Increases the likelihood of the model introducing new topics.
-   */
-  presence_penalty?: number;
-}
-export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_JSON_Mode_3 {
-  type?: "json_object" | "json_schema";
-  json_schema?: unknown;
-}
+
 export type Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Output =
   | Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Chat_Completion_Response
   | Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Text_Completion_Response
-  | string
-  | Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_AsyncResponse;
+  | string;
 export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Chat_Completion_Response {
   /**
    * Unique identifier for the completion
@@ -5372,7 +4543,7 @@ export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Chat_Completion_Resp
   /**
    * Object type identifier
    */
-  object?: "chat.completion";
+  object?: 'chat.completion';
   /**
    * Unix timestamp of when the completion was created
    */
@@ -5416,7 +4587,7 @@ export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Chat_Completion_Resp
         /**
          * Type of tool call
          */
-        type: "function";
+        type: 'function';
         function: {
           /**
            * Name of the function to call
@@ -5472,7 +4643,7 @@ export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Text_Completion_Resp
   /**
    * Object type identifier
    */
-  object?: "text_completion";
+  object?: 'text_completion';
   /**
    * Unix timestamp of when the completion was created
    */
@@ -5528,12 +4699,7 @@ export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Text_Completion_Resp
     total_tokens?: number;
   };
 }
-export interface Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_AsyncResponse {
-  /**
-   * The async request id that can be used to obtain the results.
-   */
-  request_id?: string;
-}
+
 export declare abstract class Base_Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It {
   inputs: Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Input;
   postProcessedOutputs: Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Output;
@@ -5565,7 +4731,7 @@ export interface Ai_Cf_Deepgram_Flux_Input {
   /**
    * Encoding of the audio stream. Currently only supports raw signed little-endian 16-bit PCM.
    */
-  encoding: "linear16";
+  encoding: 'linear16';
   /**
    * Sample rate of the audio stream in Hz.
    */
@@ -5589,7 +4755,7 @@ export interface Ai_Cf_Deepgram_Flux_Input {
   /**
    * Opts out requests from the Deepgram Model Improvement Program. Refer to Deepgram Docs for pricing impacts before setting this to true. https://dpgr.am/deepgram-mip
    */
-  mip_opt_out?: "true" | "false";
+  mip_opt_out?: 'true' | 'false';
   /**
    * Label your requests for the purpose of identification during usage reporting
    */
@@ -5610,7 +4776,12 @@ export interface Ai_Cf_Deepgram_Flux_Output {
   /**
    * The type of event being reported.
    */
-  event?: "Update" | "StartOfTurn" | "EagerEndOfTurn" | "TurnResumed" | "EndOfTurn";
+  event?:
+    | 'Update'
+    | 'StartOfTurn'
+    | 'EagerEndOfTurn'
+    | 'TurnResumed'
+    | 'EndOfTurn';
   /**
    * The index of the current turn
    */
@@ -5654,54 +4825,54 @@ export interface Ai_Cf_Deepgram_Aura_2_En_Input {
    * Speaker used to produce the audio.
    */
   speaker?:
-    | "amalthea"
-    | "andromeda"
-    | "apollo"
-    | "arcas"
-    | "aries"
-    | "asteria"
-    | "athena"
-    | "atlas"
-    | "aurora"
-    | "callista"
-    | "cora"
-    | "cordelia"
-    | "delia"
-    | "draco"
-    | "electra"
-    | "harmonia"
-    | "helena"
-    | "hera"
-    | "hermes"
-    | "hyperion"
-    | "iris"
-    | "janus"
-    | "juno"
-    | "jupiter"
-    | "luna"
-    | "mars"
-    | "minerva"
-    | "neptune"
-    | "odysseus"
-    | "ophelia"
-    | "orion"
-    | "orpheus"
-    | "pandora"
-    | "phoebe"
-    | "pluto"
-    | "saturn"
-    | "thalia"
-    | "theia"
-    | "vesta"
-    | "zeus";
+    | 'amalthea'
+    | 'andromeda'
+    | 'apollo'
+    | 'arcas'
+    | 'aries'
+    | 'asteria'
+    | 'athena'
+    | 'atlas'
+    | 'aurora'
+    | 'callista'
+    | 'cora'
+    | 'cordelia'
+    | 'delia'
+    | 'draco'
+    | 'electra'
+    | 'harmonia'
+    | 'helena'
+    | 'hera'
+    | 'hermes'
+    | 'hyperion'
+    | 'iris'
+    | 'janus'
+    | 'juno'
+    | 'jupiter'
+    | 'luna'
+    | 'mars'
+    | 'minerva'
+    | 'neptune'
+    | 'odysseus'
+    | 'ophelia'
+    | 'orion'
+    | 'orpheus'
+    | 'pandora'
+    | 'phoebe'
+    | 'pluto'
+    | 'saturn'
+    | 'thalia'
+    | 'theia'
+    | 'vesta'
+    | 'zeus';
   /**
    * Encoding of the output audio.
    */
-  encoding?: "linear16" | "flac" | "mulaw" | "alaw" | "mp3" | "opus" | "aac";
+  encoding?: 'linear16' | 'flac' | 'mulaw' | 'alaw' | 'mp3' | 'opus' | 'aac';
   /**
    * Container specifies the file format wrapper for the output audio. The available options depend on the encoding type..
    */
-  container?: "none" | "wav" | "ogg";
+  container?: 'none' | 'wav' | 'ogg';
   /**
    * The text content to be converted to speech
    */
@@ -5728,24 +4899,24 @@ export interface Ai_Cf_Deepgram_Aura_2_Es_Input {
    * Speaker used to produce the audio.
    */
   speaker?:
-    | "sirio"
-    | "nestor"
-    | "carina"
-    | "celeste"
-    | "alvaro"
-    | "diana"
-    | "aquila"
-    | "selena"
-    | "estrella"
-    | "javier";
+    | 'sirio'
+    | 'nestor'
+    | 'carina'
+    | 'celeste'
+    | 'alvaro'
+    | 'diana'
+    | 'aquila'
+    | 'selena'
+    | 'estrella'
+    | 'javier';
   /**
    * Encoding of the output audio.
    */
-  encoding?: "linear16" | "flac" | "mulaw" | "alaw" | "mp3" | "opus" | "aac";
+  encoding?: 'linear16' | 'flac' | 'mulaw' | 'alaw' | 'mp3' | 'opus' | 'aac';
   /**
    * Container specifies the file format wrapper for the output audio. The available options depend on the encoding type..
    */
-  container?: "none" | "wav" | "ogg";
+  container?: 'none' | 'wav' | 'ogg';
   /**
    * The text content to be converted to speech
    */
@@ -5832,96 +5003,96 @@ export declare abstract class Base_Ai_Cf_Google_Gemma_4_26B_A4B_IT {
   postProcessedOutputs: ChatCompletionsOutput;
 }
 export interface AiModels {
-  "@cf/huggingface/distilbert-sst-2-int8": BaseAiTextClassification;
-  "@cf/stabilityai/stable-diffusion-xl-base-1.0": BaseAiTextToImage;
-  "@cf/runwayml/stable-diffusion-v1-5-inpainting": BaseAiTextToImage;
-  "@cf/runwayml/stable-diffusion-v1-5-img2img": BaseAiTextToImage;
-  "@cf/lykon/dreamshaper-8-lcm": BaseAiTextToImage;
-  "@cf/bytedance/stable-diffusion-xl-lightning": BaseAiTextToImage;
-  "@cf/myshell-ai/melotts": BaseAiTextToSpeech;
-  "@cf/google/embeddinggemma-300m": BaseAiTextEmbeddings;
-  "@cf/microsoft/resnet-50": BaseAiImageClassification;
-  "@cf/meta/llama-2-7b-chat-int8": BaseAiTextGeneration;
-  "@cf/mistral/mistral-7b-instruct-v0.1": BaseAiTextGeneration;
-  "@cf/meta/llama-2-7b-chat-fp16": BaseAiTextGeneration;
-  "@hf/thebloke/llama-2-13b-chat-awq": BaseAiTextGeneration;
-  "@hf/thebloke/mistral-7b-instruct-v0.1-awq": BaseAiTextGeneration;
-  "@hf/thebloke/zephyr-7b-beta-awq": BaseAiTextGeneration;
-  "@hf/thebloke/openhermes-2.5-mistral-7b-awq": BaseAiTextGeneration;
-  "@hf/thebloke/neural-chat-7b-v3-1-awq": BaseAiTextGeneration;
-  "@hf/thebloke/deepseek-coder-6.7b-base-awq": BaseAiTextGeneration;
-  "@hf/thebloke/deepseek-coder-6.7b-instruct-awq": BaseAiTextGeneration;
-  "@cf/deepseek-ai/deepseek-math-7b-instruct": BaseAiTextGeneration;
-  "@cf/defog/sqlcoder-7b-2": BaseAiTextGeneration;
-  "@cf/openchat/openchat-3.5-0106": BaseAiTextGeneration;
-  "@cf/tiiuae/falcon-7b-instruct": BaseAiTextGeneration;
-  "@cf/thebloke/discolm-german-7b-v1-awq": BaseAiTextGeneration;
-  "@cf/qwen/qwen1.5-0.5b-chat": BaseAiTextGeneration;
-  "@cf/qwen/qwen1.5-7b-chat-awq": BaseAiTextGeneration;
-  "@cf/qwen/qwen1.5-14b-chat-awq": BaseAiTextGeneration;
-  "@cf/tinyllama/tinyllama-1.1b-chat-v1.0": BaseAiTextGeneration;
-  "@cf/microsoft/phi-2": BaseAiTextGeneration;
-  "@cf/qwen/qwen1.5-1.8b-chat": BaseAiTextGeneration;
-  "@cf/mistral/mistral-7b-instruct-v0.2-lora": BaseAiTextGeneration;
-  "@hf/nousresearch/hermes-2-pro-mistral-7b": BaseAiTextGeneration;
-  "@hf/nexusflow/starling-lm-7b-beta": BaseAiTextGeneration;
-  "@hf/google/gemma-7b-it": BaseAiTextGeneration;
-  "@cf/meta-llama/llama-2-7b-chat-hf-lora": BaseAiTextGeneration;
-  "@cf/google/gemma-2b-it-lora": BaseAiTextGeneration;
-  "@cf/google/gemma-7b-it-lora": BaseAiTextGeneration;
-  "@hf/mistral/mistral-7b-instruct-v0.2": BaseAiTextGeneration;
-  "@cf/meta/llama-3-8b-instruct": BaseAiTextGeneration;
-  "@cf/fblgit/una-cybertron-7b-v2-bf16": BaseAiTextGeneration;
-  "@cf/meta/llama-3-8b-instruct-awq": BaseAiTextGeneration;
-  "@cf/meta/llama-3.1-8b-instruct-fp8": BaseAiTextGeneration;
-  "@cf/meta/llama-3.1-8b-instruct-awq": BaseAiTextGeneration;
-  "@cf/meta/llama-3.2-3b-instruct": BaseAiTextGeneration;
-  "@cf/meta/llama-3.2-1b-instruct": BaseAiTextGeneration;
-  "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b": BaseAiTextGeneration;
-  "@cf/ibm-granite/granite-4.0-h-micro": BaseAiTextGeneration;
-  "@cf/facebook/bart-large-cnn": BaseAiSummarization;
-  "@cf/llava-hf/llava-1.5-7b-hf": BaseAiImageToText;
-  "@cf/baai/bge-base-en-v1.5": Base_Ai_Cf_Baai_Bge_Base_En_V1_5;
-  "@cf/openai/whisper": Base_Ai_Cf_Openai_Whisper;
-  "@cf/meta/m2m100-1.2b": Base_Ai_Cf_Meta_M2M100_1_2B;
-  "@cf/baai/bge-small-en-v1.5": Base_Ai_Cf_Baai_Bge_Small_En_V1_5;
-  "@cf/baai/bge-large-en-v1.5": Base_Ai_Cf_Baai_Bge_Large_En_V1_5;
-  "@cf/unum/uform-gen2-qwen-500m": Base_Ai_Cf_Unum_Uform_Gen2_Qwen_500M;
-  "@cf/openai/whisper-tiny-en": Base_Ai_Cf_Openai_Whisper_Tiny_En;
-  "@cf/openai/whisper-large-v3-turbo": Base_Ai_Cf_Openai_Whisper_Large_V3_Turbo;
-  "@cf/baai/bge-m3": Base_Ai_Cf_Baai_Bge_M3;
-  "@cf/black-forest-labs/flux-1-schnell": Base_Ai_Cf_Black_Forest_Labs_Flux_1_Schnell;
-  "@cf/meta/llama-3.2-11b-vision-instruct": Base_Ai_Cf_Meta_Llama_3_2_11B_Vision_Instruct;
-  "@cf/meta/llama-3.3-70b-instruct-fp8-fast": Base_Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast;
-  "@cf/meta/llama-guard-3-8b": Base_Ai_Cf_Meta_Llama_Guard_3_8B;
-  "@cf/baai/bge-reranker-base": Base_Ai_Cf_Baai_Bge_Reranker_Base;
-  "@cf/qwen/qwen2.5-coder-32b-instruct": Base_Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct;
-  "@cf/qwen/qwq-32b": Base_Ai_Cf_Qwen_Qwq_32B;
-  "@cf/mistralai/mistral-small-3.1-24b-instruct": Base_Ai_Cf_Mistralai_Mistral_Small_3_1_24B_Instruct;
-  "@cf/google/gemma-3-12b-it": Base_Ai_Cf_Google_Gemma_3_12B_It;
-  "@cf/meta/llama-4-scout-17b-16e-instruct": Base_Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct;
-  "@cf/qwen/qwen3-30b-a3b-fp8": Base_Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8;
-  "@cf/deepgram/nova-3": Base_Ai_Cf_Deepgram_Nova_3;
-  "@cf/qwen/qwen3-embedding-0.6b": Base_Ai_Cf_Qwen_Qwen3_Embedding_0_6B;
-  "@cf/pipecat-ai/smart-turn-v2": Base_Ai_Cf_Pipecat_Ai_Smart_Turn_V2;
-  "@cf/openai/gpt-oss-120b": Base_Ai_Cf_Openai_Gpt_Oss_120B;
-  "@cf/openai/gpt-oss-20b": Base_Ai_Cf_Openai_Gpt_Oss_20B;
-  "@cf/leonardo/phoenix-1.0": Base_Ai_Cf_Leonardo_Phoenix_1_0;
-  "@cf/leonardo/lucid-origin": Base_Ai_Cf_Leonardo_Lucid_Origin;
-  "@cf/deepgram/aura-1": Base_Ai_Cf_Deepgram_Aura_1;
-  "@cf/ai4bharat/indictrans2-en-indic-1B": Base_Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B;
-  "@cf/aisingapore/gemma-sea-lion-v4-27b-it": Base_Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It;
-  "@cf/pfnet/plamo-embedding-1b": Base_Ai_Cf_Pfnet_Plamo_Embedding_1B;
-  "@cf/deepgram/flux": Base_Ai_Cf_Deepgram_Flux;
-  "@cf/deepgram/aura-2-en": Base_Ai_Cf_Deepgram_Aura_2_En;
-  "@cf/deepgram/aura-2-es": Base_Ai_Cf_Deepgram_Aura_2_Es;
-  "@cf/black-forest-labs/flux-2-dev": Base_Ai_Cf_Black_Forest_Labs_Flux_2_Dev;
-  "@cf/black-forest-labs/flux-2-klein-4b": Base_Ai_Cf_Black_Forest_Labs_Flux_2_Klein_4B;
-  "@cf/black-forest-labs/flux-2-klein-9b": Base_Ai_Cf_Black_Forest_Labs_Flux_2_Klein_9B;
-  "@cf/zai-org/glm-4.7-flash": Base_Ai_Cf_Zai_Org_Glm_4_7_Flash;
-  "@cf/moonshotai/kimi-k2.5": Base_Ai_Cf_Moonshotai_Kimi_K2_5;
-  "@cf/nvidia/nemotron-3-120b-a12b": Base_Ai_Cf_Nvidia_Nemotron_3_120B_A12B;
-  "@cf/google/gemma-4-26b-a4b-it": Base_Ai_Cf_Google_Gemma_4_26B_A4B_IT;
+  '@cf/huggingface/distilbert-sst-2-int8': BaseAiTextClassification;
+  '@cf/stabilityai/stable-diffusion-xl-base-1.0': BaseAiTextToImage;
+  '@cf/runwayml/stable-diffusion-v1-5-inpainting': BaseAiTextToImage;
+  '@cf/runwayml/stable-diffusion-v1-5-img2img': BaseAiTextToImage;
+  '@cf/lykon/dreamshaper-8-lcm': BaseAiTextToImage;
+  '@cf/bytedance/stable-diffusion-xl-lightning': BaseAiTextToImage;
+  '@cf/myshell-ai/melotts': BaseAiTextToSpeech;
+  '@cf/google/embeddinggemma-300m': BaseAiTextEmbeddings;
+  '@cf/microsoft/resnet-50': BaseAiImageClassification;
+  '@cf/meta/llama-2-7b-chat-int8': BaseAiTextGeneration;
+  '@cf/mistral/mistral-7b-instruct-v0.1': BaseAiTextGeneration;
+  '@cf/meta/llama-2-7b-chat-fp16': BaseAiTextGeneration;
+  '@hf/thebloke/llama-2-13b-chat-awq': BaseAiTextGeneration;
+  '@hf/thebloke/mistral-7b-instruct-v0.1-awq': BaseAiTextGeneration;
+  '@hf/thebloke/zephyr-7b-beta-awq': BaseAiTextGeneration;
+  '@hf/thebloke/openhermes-2.5-mistral-7b-awq': BaseAiTextGeneration;
+  '@hf/thebloke/neural-chat-7b-v3-1-awq': BaseAiTextGeneration;
+  '@hf/thebloke/deepseek-coder-6.7b-base-awq': BaseAiTextGeneration;
+  '@hf/thebloke/deepseek-coder-6.7b-instruct-awq': BaseAiTextGeneration;
+  '@cf/deepseek-ai/deepseek-math-7b-instruct': BaseAiTextGeneration;
+  '@cf/defog/sqlcoder-7b-2': BaseAiTextGeneration;
+  '@cf/openchat/openchat-3.5-0106': BaseAiTextGeneration;
+  '@cf/tiiuae/falcon-7b-instruct': BaseAiTextGeneration;
+  '@cf/thebloke/discolm-german-7b-v1-awq': BaseAiTextGeneration;
+  '@cf/qwen/qwen1.5-0.5b-chat': BaseAiTextGeneration;
+  '@cf/qwen/qwen1.5-7b-chat-awq': BaseAiTextGeneration;
+  '@cf/qwen/qwen1.5-14b-chat-awq': BaseAiTextGeneration;
+  '@cf/tinyllama/tinyllama-1.1b-chat-v1.0': BaseAiTextGeneration;
+  '@cf/microsoft/phi-2': BaseAiTextGeneration;
+  '@cf/qwen/qwen1.5-1.8b-chat': BaseAiTextGeneration;
+  '@cf/mistral/mistral-7b-instruct-v0.2-lora': BaseAiTextGeneration;
+  '@hf/nousresearch/hermes-2-pro-mistral-7b': BaseAiTextGeneration;
+  '@hf/nexusflow/starling-lm-7b-beta': BaseAiTextGeneration;
+  '@hf/google/gemma-7b-it': BaseAiTextGeneration;
+  '@cf/meta-llama/llama-2-7b-chat-hf-lora': BaseAiTextGeneration;
+  '@cf/google/gemma-2b-it-lora': BaseAiTextGeneration;
+  '@cf/google/gemma-7b-it-lora': BaseAiTextGeneration;
+  '@hf/mistral/mistral-7b-instruct-v0.2': BaseAiTextGeneration;
+  '@cf/meta/llama-3-8b-instruct': BaseAiTextGeneration;
+  '@cf/fblgit/una-cybertron-7b-v2-bf16': BaseAiTextGeneration;
+  '@cf/meta/llama-3-8b-instruct-awq': BaseAiTextGeneration;
+  '@cf/meta/llama-3.1-8b-instruct-fp8': BaseAiTextGeneration;
+  '@cf/meta/llama-3.1-8b-instruct-awq': BaseAiTextGeneration;
+  '@cf/meta/llama-3.2-3b-instruct': BaseAiTextGeneration;
+  '@cf/meta/llama-3.2-1b-instruct': BaseAiTextGeneration;
+  '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b': BaseAiTextGeneration;
+  '@cf/ibm-granite/granite-4.0-h-micro': BaseAiTextGeneration;
+  '@cf/facebook/bart-large-cnn': BaseAiSummarization;
+  '@cf/llava-hf/llava-1.5-7b-hf': BaseAiImageToText;
+  '@cf/baai/bge-base-en-v1.5': Base_Ai_Cf_Baai_Bge_Base_En_V1_5;
+  '@cf/openai/whisper': Base_Ai_Cf_Openai_Whisper;
+  '@cf/meta/m2m100-1.2b': Base_Ai_Cf_Meta_M2M100_1_2B;
+  '@cf/baai/bge-small-en-v1.5': Base_Ai_Cf_Baai_Bge_Small_En_V1_5;
+  '@cf/baai/bge-large-en-v1.5': Base_Ai_Cf_Baai_Bge_Large_En_V1_5;
+  '@cf/unum/uform-gen2-qwen-500m': Base_Ai_Cf_Unum_Uform_Gen2_Qwen_500M;
+  '@cf/openai/whisper-tiny-en': Base_Ai_Cf_Openai_Whisper_Tiny_En;
+  '@cf/openai/whisper-large-v3-turbo': Base_Ai_Cf_Openai_Whisper_Large_V3_Turbo;
+  '@cf/baai/bge-m3': Base_Ai_Cf_Baai_Bge_M3;
+  '@cf/black-forest-labs/flux-1-schnell': Base_Ai_Cf_Black_Forest_Labs_Flux_1_Schnell;
+  '@cf/meta/llama-3.2-11b-vision-instruct': Base_Ai_Cf_Meta_Llama_3_2_11B_Vision_Instruct;
+  '@cf/meta/llama-3.3-70b-instruct-fp8-fast': Base_Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast;
+  '@cf/meta/llama-guard-3-8b': Base_Ai_Cf_Meta_Llama_Guard_3_8B;
+  '@cf/baai/bge-reranker-base': Base_Ai_Cf_Baai_Bge_Reranker_Base;
+  '@cf/qwen/qwen2.5-coder-32b-instruct': Base_Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct;
+  '@cf/qwen/qwq-32b': Base_Ai_Cf_Qwen_Qwq_32B;
+  '@cf/mistralai/mistral-small-3.1-24b-instruct': Base_Ai_Cf_Mistralai_Mistral_Small_3_1_24B_Instruct;
+  '@cf/google/gemma-3-12b-it': Base_Ai_Cf_Google_Gemma_3_12B_It;
+  '@cf/meta/llama-4-scout-17b-16e-instruct': Base_Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct;
+  '@cf/qwen/qwen3-30b-a3b-fp8': Base_Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8;
+  '@cf/deepgram/nova-3': Base_Ai_Cf_Deepgram_Nova_3;
+  '@cf/qwen/qwen3-embedding-0.6b': Base_Ai_Cf_Qwen_Qwen3_Embedding_0_6B;
+  '@cf/pipecat-ai/smart-turn-v2': Base_Ai_Cf_Pipecat_Ai_Smart_Turn_V2;
+  '@cf/openai/gpt-oss-120b': Base_Ai_Cf_Openai_Gpt_Oss_120B;
+  '@cf/openai/gpt-oss-20b': Base_Ai_Cf_Openai_Gpt_Oss_20B;
+  '@cf/leonardo/phoenix-1.0': Base_Ai_Cf_Leonardo_Phoenix_1_0;
+  '@cf/leonardo/lucid-origin': Base_Ai_Cf_Leonardo_Lucid_Origin;
+  '@cf/deepgram/aura-1': Base_Ai_Cf_Deepgram_Aura_1;
+  '@cf/ai4bharat/indictrans2-en-indic-1B': Base_Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B;
+  '@cf/aisingapore/gemma-sea-lion-v4-27b-it': Base_Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It;
+  '@cf/pfnet/plamo-embedding-1b': Base_Ai_Cf_Pfnet_Plamo_Embedding_1B;
+  '@cf/deepgram/flux': Base_Ai_Cf_Deepgram_Flux;
+  '@cf/deepgram/aura-2-en': Base_Ai_Cf_Deepgram_Aura_2_En;
+  '@cf/deepgram/aura-2-es': Base_Ai_Cf_Deepgram_Aura_2_Es;
+  '@cf/black-forest-labs/flux-2-dev': Base_Ai_Cf_Black_Forest_Labs_Flux_2_Dev;
+  '@cf/black-forest-labs/flux-2-klein-4b': Base_Ai_Cf_Black_Forest_Labs_Flux_2_Klein_4B;
+  '@cf/black-forest-labs/flux-2-klein-9b': Base_Ai_Cf_Black_Forest_Labs_Flux_2_Klein_9B;
+  '@cf/zai-org/glm-4.7-flash': Base_Ai_Cf_Zai_Org_Glm_4_7_Flash;
+  '@cf/moonshotai/kimi-k2.5': Base_Ai_Cf_Moonshotai_Kimi_K2_5;
+  '@cf/nvidia/nemotron-3-120b-a12b': Base_Ai_Cf_Nvidia_Nemotron_3_120B_A12B;
+  '@cf/google/gemma-4-26b-a4b-it': Base_Ai_Cf_Google_Gemma_4_26B_A4B_IT;
 }
 export type AiOptions = {
   /**
@@ -5974,13 +5145,11 @@ export type AiModelsSearchObject = {
     value: string;
   }[];
 };
-export type ChatCompletionsBase = XOR<ChatCompletionsPromptInput, ChatCompletionsMessagesInput>;
-export type ChatCompletionsInput = XOR<
-  ChatCompletionsBase,
-  {
-    requests: ChatCompletionsBase[];
-  }
+export type ChatCompletionsBase = XOR<
+  ChatCompletionsPromptInput,
+  ChatCompletionsMessagesInput
 >;
+export type ChatCompletionsInput = ChatCompletionsBase;
 export interface InferenceUpstreamError extends Error {}
 export interface AiInternalError extends Error {}
 export type AiModelListType = Record<string, any>;
@@ -6005,7 +5174,6 @@ export declare abstract class Ai<
    * @param autoragId Instance ID
    */
   autorag(autoragId: string): AutoRAG;
-
   // Batch request
   run<Name extends keyof AiModelList>(
     model: Name,
@@ -6047,15 +5215,14 @@ export declare abstract class Ai<
     inputs: Record<string, unknown>,
     options?: AiOptions
   ): Promise<Record<string, unknown>>;
-
   models(params?: AiModelsSearchParams): Promise<AiModelsSearchObject[]>;
   toMarkdown(): ToMarkdownService;
   toMarkdown(
     files: MarkdownDocument[],
-    options?: ConversionRequestOptions,
+    options?: ConversionRequestOptions
   ): Promise<ConversionResponse[]>;
   toMarkdown(
     files: MarkdownDocument,
-    options?: ConversionRequestOptions,
+    options?: ConversionRequestOptions
   ): Promise<ConversionResponse>;
 }
