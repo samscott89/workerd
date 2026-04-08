@@ -630,6 +630,19 @@ wd_test(
     ],
 )
 
+js_binary(
+    name = "socket-output-gate-server",
+    entry_point = "socket-output-gate-server.js",
+)
+
+wd_test(
+    src = "socket-output-gate-test.wd-test",
+    args = ["--experimental"],
+    data = ["socket-output-gate-test.js"],
+    sidecar = "socket-output-gate-server",
+    sidecar_port_bindings = ["ECHO_SERVER_PORT"],
+)
+
 wd_test(
     src = "js-rpc-socket-test.wd-test",
     args = [

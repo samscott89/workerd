@@ -39,6 +39,9 @@ enum class AutogateKey {
   ENABLE_FAST_TEXTENCODER,
   // Enable draining read on standard streams
   ENABLE_DRAINING_READ_ON_STANDARD_STREAMS,
+  // Defers TCP socket connect() to wait for DO output gate, preventing
+  // network outputs while storage writes are pending.
+  TCP_SOCKET_CONNECT_OUTPUT_GATE,
   NumOfKeys  // Reserved for iteration.
 };
 

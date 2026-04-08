@@ -1,0 +1,25 @@
+using Workerd = import "/workerd/workerd.capnp";
+
+const unitTests :Workerd.Config = (
+  autogates = ["workerd-autogate-tcp-socket-connect-output-gate"],
+  services = [
+    (
+      name = "main",
+      worker = (
+        modules = [
+          (name = "worker", esModule = embed "socket-output-gate-test.js"),
+        ],
+        compatibilityFlags = ["nodejs_compat", "experimental"],
+        bindings = [
+          (name = "ECHO_SERVER_PORT", fromEnvironment = "ECHO_SERVER_PORT"),
+          (name = "SOCKET_TEST_DO", durableObjectNamespace = "SocketTestDO"),
+        ],
+        durableObjectNamespaces = [
+          (className = "SocketTestDO", uniqueKey = "210bd0cbd803ef7883a1ee9d86cce06e"),
+        ],
+        durableObjectStorage = (inMemory = void),
+      )
+    ),
+    ( name = "internet", network = ( allow = ["private"] ) ),
+  ],
+);
