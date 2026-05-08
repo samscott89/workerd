@@ -1,0 +1,15 @@
+{
+  "name": "@workerd/ai-types-generator",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "tsx generate.ts"
+  },
+  "devDependencies": {
+    "json-schema-to-typescript": "^15.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.0.0",
+    "@types/node": "^22.0.0"
+  }
+}
