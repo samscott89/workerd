@@ -2,12 +2,10 @@
 
 ## Status
 
-🚧 **Scaffolding only.** This script is a stub. Inputs and outputs described
-below are the planned interface; see `docs/plans/2026-05-07-ai-types-v5-refactor-plan.md`
-for the implementation roadmap.
-
-Generates `types/defines/ai-shared-schemas.d.ts` and `types/defines/ai-models.d.ts`
-from a model registry dump.
+🚧 **Partial implementation.** Generates `types/defines/ai-shared-schemas.d.ts`
+from the vendored shared schemas. Per-model types (`ai-models.d.ts`) are not yet
+generated — see `docs/plans/2026-05-07-ai-types-v5-refactor-plan.md` for the
+implementation roadmap.
 
 ## Inputs
 
