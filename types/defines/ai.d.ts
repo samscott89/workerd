@@ -123,8 +123,8 @@ export declare abstract class BaseAiTextClassification {
   postProcessedOutputs: AiTextClassificationOutput;
 }
 export declare abstract class BaseAiTextEmbeddings {
-  inputs: AiTextEmbeddingsInput;
-  postProcessedOutputs: AiTextEmbeddingsOutput;
+  inputs: _AiTextEmbeddingsInput;
+  postProcessedOutputs: _AiTextEmbeddingsOutput;
 }
 export type RoleScopedChatInput = {
   role:
@@ -193,8 +193,8 @@ export type UsageTags = {
   total_tokens: number;
 };
 export declare abstract class BaseAiTextGeneration {
-  inputs: AiTextGenerationInput;
-  postProcessedOutputs: AiTextGenerationOutput;
+  inputs: _AiTextGenerationInput;
+  postProcessedOutputs: _AiTextGenerationOutput;
 }
 export type AiTextToSpeechInput = {
   prompt: string;

@@ -139,9 +139,14 @@ export async function generateModels(): Promise<GenerateModelsResult> {
     // moonshotai/kimi, etc.) are aliased directly to the shared chat
     // completions types. This matches the convention in the existing
     // hand-rolled `types/defines/ai.d.ts`.
+    //
+    // The shared types are non-exported (internal) -- they live in
+    // `ai-shared-schemas.d.ts` as `interface _AiChatCompletionsInput`
+    // declarations. We reference them by their underscored names; the
+    // per-model alias remains exported so users can name it directly.
     if (isChatCompletionsSchema(schema)) {
-      content += `export type ${inputClass} = AiChatCompletionsInput;\n`;
-      content += `export type ${outputClass} = AiChatCompletionsOutput;\n`;
+      content += `export type ${inputClass} = _AiChatCompletionsInput;\n`;
+      content += `export type ${outputClass} = _AiChatCompletionsOutput;\n`;
       content += `export interface ${baseClass} {\n`;
       content += `  inputs: ${inputClass};\n`;
       content += `  postProcessedOutputs: ${outputClass};\n`;
@@ -200,7 +205,26 @@ export async function generateModels(): Promise<GenerateModelsResult> {
         }
       );
 
-      content += inputTs + outputTs;
+      // Strip `export` from every hoisted helper type produced by
+      // `json-schema-to-typescript`. Only the three top-level names we
+      // declare ourselves (`inputClass`, `outputClass`, `baseClass`) are
+      // part of the public API. Any other hoisted interface/type alias is
+      // an internal helper and must not be importable.
+      const topLevelExported = new Set([inputClass, outputClass, baseClass]);
+      const stripNonTopLevelExports = (src: string): string =>
+        src
+          .split('\n')
+          .map((line) => {
+            const m = line.match(/^export (interface|type) (\w+)/);
+            if (m && !topLevelExported.has(m[2]!)) {
+              return line.replace(/^export /, '');
+            }
+            return line;
+          })
+          .join('\n');
+
+      content += stripNonTopLevelExports(inputTs);
+      content += stripNonTopLevelExports(outputTs);
       content += `export interface ${baseClass} {\n`;
       content += `  inputs: ${inputClass};\n`;
       content += `  postProcessedOutputs: ${outputClass};\n`;

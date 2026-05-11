@@ -14,18 +14,25 @@
 /**
  * Derive a TypeScript type name from a block `$id` and a sub-schema key.
  *
+ * Shared schema type names are prefixed with `_` to mark them as internal:
+ * they are emitted as non-exported `interface _Ai...` declarations in
+ * `types/defines/ai-shared-schemas.d.ts`, so users cannot import them by name
+ * even though the top-level per-model types still reference them
+ * structurally. The leading underscore is also a visual cue that the name is
+ * not part of the public API.
+ *
  * Example:
  *   schemaIdToTypeName(
  *     "http://ai.cloudflare.com/schemas/textGenerationOptions",
  *     "common",
  *   )
- *   // => "AiTextGenerationOptionsCommon"
+ *   // => "_AiTextGenerationOptionsCommon"
  *
  *   schemaIdToTypeName(
  *     "http://ai.cloudflare.com/schemas/jsonMode",
  *     "response_format",
  *   )
- *   // => "AiJsonModeResponseFormat"
+ *   // => "_AiJsonModeResponseFormat"
  */
 export function schemaIdToTypeName(schemaId: string, key: string): string {
   // Strip "http://ai.cloudflare.com/schemas/" (or any URL prefix ending in
@@ -40,7 +47,7 @@ export function schemaIdToTypeName(schemaId: string, key: string): string {
     .split('_')
     .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
     .join('');
-  return 'Ai' + blockPascal + keyPascal;
+  return '_Ai' + blockPascal + keyPascal;
 }
 
 /**

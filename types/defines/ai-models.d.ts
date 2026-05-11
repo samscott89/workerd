@@ -718,16 +718,16 @@ export interface Base_Ai_Cf_Meta_Llama_3_2_11B_Vision_Instruct {
 
 export type Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Input =
   | ({
-      prompt: AiTextGenerationPromptsPrompt;
-      lora?: AiTextGenerationFinetuneLora;
-      response_format?: AiJsonModeResponseFormat;
-    } & AiTextGenerationOptionsCommon)
+      prompt: _AiTextGenerationPromptsPrompt;
+      lora?: _AiTextGenerationFinetuneLora;
+      response_format?: _AiJsonModeResponseFormat;
+    } & _AiTextGenerationOptionsCommon)
   | ({
-      messages: AiTextGenerationPromptsMessages;
-      functions?: AiTextGenerationToolsFunctions;
-      tools?: AiTextGenerationToolsTools;
-      response_format?: AiJsonModeResponseFormat;
-    } & AiTextGenerationOptionsCommon);
+      messages: _AiTextGenerationPromptsMessages;
+      functions?: _AiTextGenerationToolsFunctions;
+      tools?: _AiTextGenerationToolsTools;
+      response_format?: _AiJsonModeResponseFormat;
+    } & _AiTextGenerationOptionsCommon);
 export type Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Output =
   | {
       /**
@@ -1950,7 +1950,7 @@ export type Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Input =
        * JSON schema that should be fulfilled for the response.
        */
       guided_json?: {};
-      response_format?: AiJsonModeResponseFormat;
+      response_format?: _AiJsonModeResponseFormat;
       /**
        * If true, a chat template is not applied and you must adhere to the specific model's expected formatting.
        */
@@ -2128,7 +2128,7 @@ export type Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Input =
             };
           }
       )[];
-      response_format?: AiJsonModeResponseFormat;
+      response_format?: _AiJsonModeResponseFormat;
       /**
        * JSON schema that should be fufilled for the response.
        */
@@ -2232,17 +2232,17 @@ export interface Base_Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct {
 
 export type Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Input =
   | ({
-      prompt: AiTextGenerationPromptsPrompt;
-      lora?: AiTextGenerationFinetuneLora;
-      response_format?: AiJsonModeResponseFormat;
+      prompt: _AiTextGenerationPromptsPrompt;
+      lora?: _AiTextGenerationFinetuneLora;
+      response_format?: _AiJsonModeResponseFormat;
     } & {
       [k: string]: unknown;
     })
   | ({
-      messages: AiTextGenerationPromptsMessages;
-      functions?: AiTextGenerationToolsFunctions;
-      tools?: AiTextGenerationToolsTools;
-      response_format?: AiJsonModeResponseFormat;
+      messages: _AiTextGenerationPromptsMessages;
+      functions?: _AiTextGenerationToolsFunctions;
+      tools?: _AiTextGenerationToolsTools;
+      response_format?: _AiJsonModeResponseFormat;
     } & {
       [k: string]: unknown;
     });
@@ -2325,7 +2325,7 @@ export type Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Output =
          */
         logprobs?: {} | null;
       }[];
-      usage?: AiUsageUsage;
+      usage?: _AiUsageUsage;
       /**
        * Log probabilities for the prompt (if requested)
        */
@@ -2377,7 +2377,7 @@ export type Ai_Cf_Qwen_Qwen3_30B_A3B_Fp8_Output =
          */
         prompt_logprobs?: {} | null;
       }[];
-      usage?: AiUsageUsage;
+      usage?: _AiUsageUsage;
     }
   | string
   | {
@@ -2641,7 +2641,7 @@ export interface Base_Ai_Cf_Pipecat_Ai_Smart_Turn_V2 {
 }
 
 export type Ai_Cf_Openai_Gpt_Oss_120B_Input =
-  | AiTextGenerationInput
+  | _AiTextGenerationInput
   | {
       /**
        * Responses API Input messages. Refer to OpenAI Responses API docs to learn more about supported content types
@@ -2665,7 +2665,7 @@ export interface Base_Ai_Cf_Openai_Gpt_Oss_120B {
 }
 
 export type Ai_Cf_Openai_Gpt_Oss_20B_Input =
-  | AiTextGenerationInput
+  | _AiTextGenerationInput
   | {
       /**
        * Responses API Input messages. Refer to OpenAI Responses API docs to learn more about supported content types
@@ -2872,17 +2872,17 @@ export interface Base_Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B {
 
 export type Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Input =
   | ({
-      prompt: AiTextGenerationPromptsPrompt;
-      lora?: AiTextGenerationFinetuneLora;
-      response_format?: AiJsonModeResponseFormat;
+      prompt: _AiTextGenerationPromptsPrompt;
+      lora?: _AiTextGenerationFinetuneLora;
+      response_format?: _AiJsonModeResponseFormat;
     } & {
       [k: string]: unknown;
     })
   | ({
-      messages: AiTextGenerationPromptsMessages;
-      functions?: AiTextGenerationToolsFunctions;
-      tools?: AiTextGenerationToolsTools;
-      response_format?: AiJsonModeResponseFormat;
+      messages: _AiTextGenerationPromptsMessages;
+      functions?: _AiTextGenerationToolsFunctions;
+      tools?: _AiTextGenerationToolsTools;
+      response_format?: _AiJsonModeResponseFormat;
     } & {
       [k: string]: unknown;
     });
@@ -2965,7 +2965,7 @@ export type Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Output =
          */
         logprobs?: {} | null;
       }[];
-      usage?: AiUsageUsage;
+      usage?: _AiUsageUsage;
       /**
        * Log probabilities for the prompt (if requested)
        */
@@ -3017,7 +3017,7 @@ export type Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Output =
          */
         prompt_logprobs?: {} | null;
       }[];
-      usage?: AiUsageUsage;
+      usage?: _AiUsageUsage;
     }
   | string
   | {
@@ -3320,22 +3320,22 @@ export interface Base_Ai_Cf_Black_Forest_Labs_Flux_2_Klein_9B {
   postProcessedOutputs: Ai_Cf_Black_Forest_Labs_Flux_2_Klein_9B_Output;
 }
 
-export type Ai_Cf_Zai_Org_Glm_4_7_Flash_Input = AiChatCompletionsInput;
-export type Ai_Cf_Zai_Org_Glm_4_7_Flash_Output = AiChatCompletionsOutput;
+export type Ai_Cf_Zai_Org_Glm_4_7_Flash_Input = _AiChatCompletionsInput;
+export type Ai_Cf_Zai_Org_Glm_4_7_Flash_Output = _AiChatCompletionsOutput;
 export interface Base_Ai_Cf_Zai_Org_Glm_4_7_Flash {
   inputs: Ai_Cf_Zai_Org_Glm_4_7_Flash_Input;
   postProcessedOutputs: Ai_Cf_Zai_Org_Glm_4_7_Flash_Output;
 }
 
-export type Ai_Cf_Moonshotai_Kimi_K2_5_Input = AiChatCompletionsInput;
-export type Ai_Cf_Moonshotai_Kimi_K2_5_Output = AiChatCompletionsOutput;
+export type Ai_Cf_Moonshotai_Kimi_K2_5_Input = _AiChatCompletionsInput;
+export type Ai_Cf_Moonshotai_Kimi_K2_5_Output = _AiChatCompletionsOutput;
 export interface Base_Ai_Cf_Moonshotai_Kimi_K2_5 {
   inputs: Ai_Cf_Moonshotai_Kimi_K2_5_Input;
   postProcessedOutputs: Ai_Cf_Moonshotai_Kimi_K2_5_Output;
 }
 
-export type Ai_Cf_Nvidia_Nemotron_3_120B_A12B_Input = AiChatCompletionsInput;
-export type Ai_Cf_Nvidia_Nemotron_3_120B_A12B_Output = AiChatCompletionsOutput;
+export type Ai_Cf_Nvidia_Nemotron_3_120B_A12B_Input = _AiChatCompletionsInput;
+export type Ai_Cf_Nvidia_Nemotron_3_120B_A12B_Output = _AiChatCompletionsOutput;
 export interface Base_Ai_Cf_Nvidia_Nemotron_3_120B_A12B {
   inputs: Ai_Cf_Nvidia_Nemotron_3_120B_A12B_Input;
   postProcessedOutputs: Ai_Cf_Nvidia_Nemotron_3_120B_A12B_Output;
@@ -3348,7 +3348,7 @@ export type Ai_Cf_Google_Gemma_4_26B_A4B_It_Input =
        */
       prompt: string;
       skip_special_tokens?: boolean;
-    } & AiChatCompletionsOptionsCommon)
+    } & _AiChatCompletionsOptionsCommon)
   | ({
       /**
        * A list of messages comprising the conversation so far.
@@ -3356,25 +3356,97 @@ export type Ai_Cf_Google_Gemma_4_26B_A4B_It_Input =
        * @minItems 1
        */
       messages: [
-        AiChatCompletionsMessagesChatCompletionMessageParam,
-        ...AiChatCompletionsMessagesChatCompletionMessageParam[],
+        _AiChatCompletionsMessagesChatCompletionMessageParam,
+        ..._AiChatCompletionsMessagesChatCompletionMessageParam[],
       ];
       skip_special_tokens?: boolean;
-    } & AiChatCompletionsOptionsCommon);
-export type Ai_Cf_Google_Gemma_4_26B_A4B_It_Output = AiChatCompletionsOutput;
+    } & _AiChatCompletionsOptionsCommon);
+export type Ai_Cf_Google_Gemma_4_26B_A4B_It_Output = _AiChatCompletionsOutput;
 export interface Base_Ai_Cf_Google_Gemma_4_26B_A4B_It {
   inputs: Ai_Cf_Google_Gemma_4_26B_A4B_It_Input;
   postProcessedOutputs: Ai_Cf_Google_Gemma_4_26B_A4B_It_Output;
 }
 
-export type Ai_Cf_Moonshotai_Kimi_K2_6_Input = AiChatCompletionsInput;
-export type Ai_Cf_Moonshotai_Kimi_K2_6_Output = AiChatCompletionsOutput;
+export type Ai_Cf_Moonshotai_Kimi_K2_6_Input = _AiChatCompletionsInput;
+export type Ai_Cf_Moonshotai_Kimi_K2_6_Output = _AiChatCompletionsOutput;
 export interface Base_Ai_Cf_Moonshotai_Kimi_K2_6 {
   inputs: Ai_Cf_Moonshotai_Kimi_K2_6_Input;
   postProcessedOutputs: Ai_Cf_Moonshotai_Kimi_K2_6_Output;
 }
 
 // New since previous generation:
+//   - @cf/baai/bge-base-en-v1.5
+//   - @cf/microsoft/resnet-50
+//   - @cf/huggingface/distilbert-sst-2-int8
+//   - @cf/openai/whisper
+//   - @cf/meta/llama-2-7b-chat-int8
+//   - @cf/meta/m2m100-1.2b
+//   - @cf/mistral/mistral-7b-instruct-v0.1
+//   - @cf/meta/llama-2-7b-chat-fp16
+//   - @cf/baai/bge-small-en-v1.5
+//   - @cf/baai/bge-large-en-v1.5
+//   - @cf/stabilityai/stable-diffusion-xl-base-1.0
+//   - @cf/runwayml/stable-diffusion-v1-5-inpainting
+//   - @cf/runwayml/stable-diffusion-v1-5-img2img
+//   - @cf/lykon/dreamshaper-8-lcm
+//   - @cf/bytedance/stable-diffusion-xl-lightning
+//   - @cf/defog/sqlcoder-7b-2
+//   - @cf/microsoft/phi-2
+//   - @cf/facebook/bart-large-cnn
+//   - @cf/unum/uform-gen2-qwen-500m
+//   - @cf/mistral/mistral-7b-instruct-v0.2-lora
+//   - @hf/nousresearch/hermes-2-pro-mistral-7b
+//   - @hf/google/gemma-7b-it
+//   - @cf/meta-llama/llama-2-7b-chat-hf-lora
+//   - @cf/google/gemma-2b-it-lora
+//   - @cf/google/gemma-7b-it-lora
+//   - @hf/mistral/mistral-7b-instruct-v0.2
+//   - @cf/meta/llama-3-8b-instruct
+//   - @cf/openai/whisper-tiny-en
+//   - @cf/llava-hf/llava-1.5-7b-hf
+//   - @cf/meta/llama-3-8b-instruct-awq
+//   - @cf/openai/whisper-large-v3-turbo
+//   - @cf/baai/bge-m3
+//   - @cf/myshell-ai/melotts
+//   - @cf/meta/llama-3.1-8b-instruct-fp8
+//   - @cf/meta/llama-3.1-8b-instruct-awq
+//   - @cf/black-forest-labs/flux-1-schnell
+//   - @cf/meta/llama-3.2-11b-vision-instruct
+//   - @cf/meta/llama-3.2-3b-instruct
+//   - @cf/meta/llama-3.2-1b-instruct
+//   - @cf/meta/llama-3.3-70b-instruct-fp8-fast
+//   - @cf/deepseek-ai/deepseek-r1-distill-qwen-32b
+//   - @cf/meta/llama-guard-3-8b
+//   - @cf/baai/bge-reranker-base
+//   - @cf/qwen/qwen2.5-coder-32b-instruct
+//   - @cf/qwen/qwq-32b
+//   - @cf/mistralai/mistral-small-3.1-24b-instruct
+//   - @cf/google/gemma-3-12b-it
+//   - @cf/meta/llama-4-scout-17b-16e-instruct
+//   - @cf/qwen/qwen3-30b-a3b-fp8
+//   - @cf/deepgram/nova-3
+//   - @cf/qwen/qwen3-embedding-0.6b
+//   - @cf/pipecat-ai/smart-turn-v2
+//   - @cf/openai/gpt-oss-120b
+//   - @cf/openai/gpt-oss-20b
+//   - @cf/leonardo/phoenix-1.0
+//   - @cf/leonardo/lucid-origin
+//   - @cf/deepgram/aura-1
+//   - @cf/google/embeddinggemma-300m
+//   - @cf/ai4bharat/indictrans2-en-indic-1B
+//   - @cf/aisingapore/gemma-sea-lion-v4-27b-it
+//   - @cf/pfnet/plamo-embedding-1b
+//   - @cf/deepgram/flux
+//   - @cf/ibm-granite/granite-4.0-h-micro
+//   - @cf/deepgram/aura-2-en
+//   - @cf/deepgram/aura-2-es
+//   - @cf/black-forest-labs/flux-2-dev
+//   - @cf/black-forest-labs/flux-2-klein-4b
+//   - @cf/black-forest-labs/flux-2-klein-9b
+//   - @cf/zai-org/glm-4.7-flash
+//   - @cf/moonshotai/kimi-k2.5
+//   - @cf/nvidia/nemotron-3-120b-a12b
+//   - @cf/google/gemma-4-26b-a4b-it
 //   - @cf/moonshotai/kimi-k2.6
 export interface AiModels {
   '@cf/baai/bge-base-en-v1.5': Base_Ai_Cf_Baai_Bge_Base_En_V1_5;

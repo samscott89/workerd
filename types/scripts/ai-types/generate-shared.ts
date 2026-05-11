@@ -187,7 +187,14 @@ export async function generateSharedSchemas(): Promise<string> {
           },
         }
       );
-      content += ts + '\n';
+      // Strip `export` from every top-level declaration in this block. Shared
+      // schema types are internal: they remain referenced structurally by the
+      // per-model top-level types in `ai-models.d.ts`, but are not part of
+      // the public API and cannot be imported by name.
+      const stripped = ts
+        .replace(/^export interface /gm, 'interface ')
+        .replace(/^export type /gm, 'type ');
+      content += stripped + '\n';
     }
   }
 
