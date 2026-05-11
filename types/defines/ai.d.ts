@@ -122,13 +122,6 @@ export declare abstract class BaseAiTextClassification {
   inputs: AiTextClassificationInput;
   postProcessedOutputs: AiTextClassificationOutput;
 }
-export type AiTextEmbeddingsInput = {
-  text: string | string[];
-};
-export type AiTextEmbeddingsOutput = {
-  shape: number[];
-  data: number[][];
-};
 export declare abstract class BaseAiTextEmbeddings {
   inputs: AiTextEmbeddingsInput;
   postProcessedOutputs: AiTextEmbeddingsOutput;
@@ -182,26 +175,6 @@ export type AiTextGenerationResponseFormat = {
   type: string;
   json_schema?: any;
 };
-export type AiTextGenerationInput = {
-  prompt?: string;
-  raw?: boolean;
-  stream?: boolean;
-  max_tokens?: number;
-  temperature?: number;
-  top_p?: number;
-  top_k?: number;
-  seed?: number;
-  repetition_penalty?: number;
-  frequency_penalty?: number;
-  presence_penalty?: number;
-  messages?: RoleScopedChatInput[];
-  response_format?: AiTextGenerationResponseFormat;
-  tools?:
-    | AiTextGenerationToolInput[]
-    | AiTextGenerationToolLegacyInput[]
-    | (object & NonNullable<unknown>);
-  functions?: AiTextGenerationFunctionsInput[];
-};
 export type AiTextGenerationToolLegacyOutput = {
   name: string;
   arguments: unknown;
@@ -218,12 +191,6 @@ export type UsageTags = {
   prompt_tokens: number;
   completion_tokens: number;
   total_tokens: number;
-};
-export type AiTextGenerationOutput = {
-  response?: string;
-  tool_calls?: AiTextGenerationToolLegacyOutput[] &
-    AiTextGenerationToolOutput[];
-  usage?: UsageTags;
 };
 export declare abstract class BaseAiTextGeneration {
   inputs: AiTextGenerationInput;
