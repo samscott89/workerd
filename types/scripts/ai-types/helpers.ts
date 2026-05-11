@@ -71,6 +71,48 @@ export function buildTypeNameMap(
 }
 
 /**
+ * Convert a model name to TypeScript class/type names.
+ *
+ * Mirrors the naming convention used by the AI SDK's `build-types.ts` so that
+ * generated names match the existing hand-rolled `types/defines/ai.d.ts`:
+ *
+ *   "@cf/baai/bge-base-en-v1.5"
+ *     -> baseClass:   "Base_Ai_Cf_Baai_Bge_Base_En_V1_5"
+ *        inputClass:  "Ai_Cf_Baai_Bge_Base_En_V1_5_Input"
+ *        outputClass: "Ai_Cf_Baai_Bge_Base_En_V1_5_Output"
+ *
+ *   "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+ *     -> baseClass:   "Base_Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast"
+ *
+ * The algorithm uppercases the model name, lower-cases all-but-the-first letter
+ * of each alphabetic run (so "70B" stays "70B" because "B" is its own run),
+ * then replaces every non-alphanumeric character with "_".
+ */
+export function modelToClass(modelName: string): {
+  baseClass: string;
+  inputClass: string;
+  outputClass: string;
+  className: string;
+} {
+  const specialChars = /[^a-zA-Z0-9]/g;
+  const upper = modelName.toUpperCase();
+  const className =
+    'Ai' +
+    upper
+      .replace(
+        /[a-zA-Z]+/g,
+        (word) => word.charAt(0).toUpperCase() + word.substring(1).toLowerCase()
+      )
+      .replace(specialChars, '_');
+  return {
+    baseClass: 'Base_' + className,
+    inputClass: className + '_Input',
+    outputClass: className + '_Output',
+    className,
+  };
+}
+
+/**
  * Detect schemas that are bare "property bags" (Cabidela convention) and
  * wrap them in `{ type: "object", properties: ... }` so that
  * `json-schema-to-typescript` can generate proper object types.
@@ -111,10 +153,7 @@ export function unwrapPropertyBag(schema: unknown): unknown {
     if (v === null || typeof v !== 'object') return false;
     const inner = v as Record<string, unknown>;
     return (
-      'type' in inner ||
-      '$ref' in inner ||
-      'oneOf' in inner ||
-      'anyOf' in inner
+      'type' in inner || '$ref' in inner || 'oneOf' in inner || 'anyOf' in inner
     );
   });
 

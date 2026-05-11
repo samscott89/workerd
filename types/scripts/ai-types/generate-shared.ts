@@ -31,10 +31,20 @@ const HEADER = `// Copyright (c) 2026 Cloudflare, Inc.
 
 `;
 
-export async function generateSharedSchemas(): Promise<string> {
-  const typeNames = buildTypeNameMap(schemaBlocks);
-  let content = HEADER;
-
+/**
+ * Build a `$RefParser` resolver that rewrites cross-block `$ref`s of the form
+ * `blockName#/Key` (or the equivalent `http://ai.cloudflare.com/schemas/...`
+ * URL form) into `tsType` stubs that
+ * [`json-schema-to-typescript`](https://github.com/bcherny/json-schema-to-typescript)
+ * emits as bare type-alias references instead of inlining the full schema.
+ *
+ * Shared between `generateSharedSchemas` (which compiles the blocks themselves)
+ * and `generateModels` (which compiles per-model schemas that may $ref into
+ * the shared blocks). The behaviour is identical in both contexts.
+ */
+export function makeRefResolver(
+  typeNames: Map<string, string>
+): Options['$refOptions'] {
   // Build a set of known short block ids (e.g. "textGenerationPrompts").
   // The vendored schemas use bare refs like `textGenerationPrompts#/Key` that
   // have no URL scheme. By the time our resolver runs, ref-parser has
@@ -73,9 +83,7 @@ export async function generateSharedSchemas(): Promise<string> {
     return undefined;
   }
 
-  // Build the custom $ref resolver once and reuse it across all compile()
-  // calls.
-  const $refOptions: Options['$refOptions'] = {
+  return {
     resolve: {
       // Disable the http resolver -- our $refs that look like
       // "http://ai.cloudflare.com/..." aren't real URLs we want to fetch.
@@ -129,6 +137,15 @@ export async function generateSharedSchemas(): Promise<string> {
       },
     },
   };
+}
+
+export async function generateSharedSchemas(): Promise<string> {
+  const typeNames = buildTypeNameMap(schemaBlocks);
+  let content = HEADER;
+
+  // Build the custom $ref resolver once and reuse it across all compile()
+  // calls.
+  const $refOptions = makeRefResolver(typeNames);
 
   for (const block of schemaBlocks) {
     const blockId = block.$id;
