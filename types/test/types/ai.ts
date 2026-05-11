@@ -8,15 +8,15 @@ export const handler: ExportedHandler<{ AI: Ai }> = {
   async fetch(_request, env) {
     // Known model -- normal response
     {
-      const result = await env.AI.run('@cf/meta/llama-3.1-8b-instruct-fp8', {
+      const result = await env.AI.run('@cf/qwen/qwen2.5-coder-32b-instruct', {
         prompt: 'hello',
       });
-      expectType<AiTextGenerationOutput>(result);
+      expectType<Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct_Output>(result);
     }
 
     // Known model -- streaming
     {
-      const result = await env.AI.run('@cf/meta/llama-3.1-8b-instruct-fp8', {
+      const result = await env.AI.run('@cf/qwen/qwen2.5-coder-32b-instruct', {
         prompt: 'hello',
         stream: true as const,
       });
@@ -26,7 +26,7 @@ export const handler: ExportedHandler<{ AI: Ai }> = {
     // Known model -- raw response
     {
       const result = await env.AI.run(
-        '@cf/meta/llama-3.1-8b-instruct-fp8',
+        '@cf/qwen/qwen2.5-coder-32b-instruct',
         { prompt: 'hello' },
         { returnRawResponse: true as const }
       );
@@ -36,7 +36,7 @@ export const handler: ExportedHandler<{ AI: Ai }> = {
     // Known model -- batch request
     {
       const result = await env.AI.run(
-        '@cf/meta/llama-3.1-8b-instruct-fp8',
+        '@cf/qwen/qwen2.5-coder-32b-instruct',
         { requests: [{ prompt: 'hello' }, { prompt: 'world' }] },
         { queueRequest: true as const }
       );
@@ -62,36 +62,26 @@ export const handler: ExportedHandler<{ AI: Ai }> = {
       expectType<Record<string, unknown>>(result);
     }
 
-    // Known model -- batch request
-    {
-      const result = await env.AI.run(
-        '@cf/meta/llama-3.1-8b-instruct-fp8',
-        { requests: [{ prompt: 'hello' }, { prompt: 'world' }] },
-        { queueRequest: true as const }
-      );
-      expectType<AsyncResponse>(result);
-    }
-
     // ChatCompletions model -- normal request with messages
     {
-      const result = await env.AI.run('@cf/zhipuai/glm-4.7-flash', {
+      const result = await env.AI.run('@cf/zai-org/glm-4.7-flash', {
         messages: [{ role: 'user' as const, content: 'hello' }],
       });
-      expectType<ChatCompletionsOutput>(result);
+      expectType<Ai_Cf_Zai_Org_Glm_4_7_Flash_Output>(result);
     }
 
     // ChatCompletions model -- normal request with prompt
     {
-      const result = await env.AI.run('@cf/zhipuai/glm-4.7-flash', {
+      const result = await env.AI.run('@cf/zai-org/glm-4.7-flash', {
         prompt: 'hello',
       });
-      expectType<ChatCompletionsOutput>(result);
+      expectType<Ai_Cf_Zai_Org_Glm_4_7_Flash_Output>(result);
     }
 
     // ChatCompletions model -- batch request with messages
     {
       const result = await env.AI.run(
-        '@cf/zhipuai/glm-4.7-flash',
+        '@cf/zai-org/glm-4.7-flash',
         {
           requests: [
             { messages: [{ role: 'user' as const, content: 'hello' }] },
@@ -100,25 +90,25 @@ export const handler: ExportedHandler<{ AI: Ai }> = {
         },
         { queueRequest: true as const }
       );
-      expectType<AsyncResponse>(result);
+      expectType<AiAsyncBatchResponse>(result);
     }
 
     // ChatCompletions model -- batch request with prompt
     {
       const result = await env.AI.run(
-        '@cf/zhipuai/glm-4.7-flash',
+        '@cf/zai-org/glm-4.7-flash',
         {
           requests: [{ prompt: 'hello' }, { prompt: 'world' }],
         },
         { queueRequest: true as const }
       );
-      expectType<AsyncResponse>(result);
+      expectType<AiAsyncBatchResponse>(result);
     }
 
     // ChatCompletions model -- batch with tools
     {
       const result = await env.AI.run(
-        '@cf/zhipuai/glm-4.7-flash',
+        '@cf/zai-org/glm-4.7-flash',
         {
           requests: [
             {
@@ -138,7 +128,7 @@ export const handler: ExportedHandler<{ AI: Ai }> = {
         },
         { queueRequest: true as const }
       );
-      expectType<AsyncResponse>(result);
+      expectType<AiAsyncBatchResponse>(result);
     }
 
     // Embeddings model -- batch request
@@ -153,7 +143,7 @@ export const handler: ExportedHandler<{ AI: Ai }> = {
         },
         { queueRequest: true as const }
       );
-      expectType<AsyncResponse>(result);
+      expectType<AiAsyncBatchResponse>(result);
     }
 
     return new Response();
