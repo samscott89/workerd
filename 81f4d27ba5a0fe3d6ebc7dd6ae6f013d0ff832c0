@@ -1,0 +1,34 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "81f4d27ba5a0fe3d6ebc7dd6ae6f013d0ff832c0",
+  "prompts": {
+    "5cbfc1523854efba": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1e883b26bffeMgBPWaz3lXQCiq",
+        "model": "anthropic/claude-opus-4-7"
+      },
+      "human_author": "Sam Scott",
+      "messages": [],
+      "total_additions": 227,
+      "total_deletions": 4,
+      "accepted_lines": 60,
+      "overriden_lines": 0
+    },
+    "8135ddf2e91f5a2b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1e70a281cffeoBrHBt498Gr1rh",
+        "model": "anthropic/claude-opus-4-7"
+      },
+      "human_author": "Sam Scott",
+      "messages": [],
+      "total_additions": 200,
+      "total_deletions": 4,
+      "accepted_lines": 200,
+      "overriden_lines": 0
+    }
+  }
+}
