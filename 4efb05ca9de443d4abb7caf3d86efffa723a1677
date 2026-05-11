@@ -1,0 +1,27 @@
+types/defines/ai-shared-schemas.d.ts
+  5cbfc1523854efba 156-195,1011-1133
+types/scripts/ai-types/generate-shared.ts
+  5cbfc1523854efba 22,149-153
+types/scripts/ai-types/helpers.ts
+  5cbfc1523854efba 74-131
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "4efb05ca9de443d4abb7caf3d86efffa723a1677",
+  "prompts": {
+    "5cbfc1523854efba": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1e883b26bffeMgBPWaz3lXQCiq",
+        "model": "anthropic/claude-opus-4-7"
+      },
+      "human_author": "Sam Scott",
+      "messages": [],
+      "total_additions": 227,
+      "total_deletions": 4,
+      "accepted_lines": 227,
+      "overriden_lines": 0
+    }
+  }
+}
