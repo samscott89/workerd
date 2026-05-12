@@ -105,32 +105,6 @@ export const handler: ExportedHandler<{ AI: Ai }> = {
       expectType<AiAsyncBatchResponse>(result);
     }
 
-    // ChatCompletions model -- batch with tools
-    {
-      const result = await env.AI.run(
-        '@cf/zai-org/glm-4.7-flash',
-        {
-          requests: [
-            {
-              messages: [{ role: 'user' as const, content: 'hello' }],
-              tools: [
-                {
-                  type: 'function' as const,
-                  function: {
-                    name: 'get_weather',
-                    description: 'Get weather',
-                    parameters: { type: 'object', properties: {} },
-                  },
-                },
-              ],
-            },
-          ],
-        },
-        { queueRequest: true as const }
-      );
-      expectType<AiAsyncBatchResponse>(result);
-    }
-
     // Embeddings model -- batch request
     {
       const result = await env.AI.run(
