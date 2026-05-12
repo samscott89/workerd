@@ -1,0 +1,42 @@
+types/scripts/ai-types/generate-models.ts
+  8135ddf2e91f5a2b 40,43-70,99-107,109-112,121,215-243,245-259,261,270-303
+types/defines/ai-models.d.ts
+  8135ddf2e91f5a2b 3376-3453
+types/scripts/ai-types/helpers.ts
+  5cbfc1523854efba 116-155,157-170
+types/scripts/ai-types/generate-shared.ts
+  5cbfc1523854efba 22,166-170
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "f9aa8cb64fa8ad7ca49040bfaddd70c6149a47ac",
+  "prompts": {
+    "5cbfc1523854efba": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1e883b26bffeMgBPWaz3lXQCiq",
+        "model": "anthropic/claude-opus-4-7"
+      },
+      "human_author": "Sam Scott",
+      "messages": [],
+      "total_additions": 227,
+      "total_deletions": 4,
+      "accepted_lines": 10,
+      "overriden_lines": 0
+    },
+    "8135ddf2e91f5a2b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1e70a281cffeoBrHBt498Gr1rh",
+        "model": "anthropic/claude-opus-4-7"
+      },
+      "human_author": "Sam Scott",
+      "messages": [],
+      "total_additions": 200,
+      "total_deletions": 4,
+      "accepted_lines": 200,
+      "overriden_lines": 0
+    }
+  }
+}

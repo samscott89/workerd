@@ -1,0 +1,44 @@
+types/defines/ai-shared-schemas.d.ts
+  5cbfc1523854efba 156-195,1011-1014,1016-1055,1057-1074,1076-1101,1103-1106,1108-1110,1112-1119,1121-1130,1133
+types/scripts/ai-types/generate-models.ts
+  8135ddf2e91f5a2b 40,43-70,99-107,109-112,121,239-267,269-283,285,294-327
+types/defines/ai-models.d.ts
+  8135ddf2e91f5a2b 3376-3377,3450-3525
+types/scripts/ai-types/helpers.ts
+  5cbfc1523854efba 123-162,164-177
+types/scripts/ai-types/generate-shared.ts
+  5cbfc1523854efba 22,166-170
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "12797c3cd700294e6a8dbffd65d87f97069b0ed0",
+  "prompts": {
+    "5cbfc1523854efba": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1e883b26bffeMgBPWaz3lXQCiq",
+        "model": "anthropic/claude-opus-4-7"
+      },
+      "human_author": "Sam Scott",
+      "messages": [],
+      "total_additions": 227,
+      "total_deletions": 4,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "8135ddf2e91f5a2b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1e70a281cffeoBrHBt498Gr1rh",
+        "model": "anthropic/claude-opus-4-7"
+      },
+      "human_author": "Sam Scott",
+      "messages": [],
+      "total_additions": 200,
+      "total_deletions": 4,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
