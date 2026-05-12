@@ -1,0 +1,23 @@
+.bazelignore
+  59b407c6152e1278 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "8538c0e364061add49403f374651f04e4daf0878",
+  "prompts": {
+    "59b407c6152e1278": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_291c29916ffebY5TvCvxItEYEj",
+        "model": "anthropic/claude-opus-4-6"
+      },
+      "human_author": "Sam Scott",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 0,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
